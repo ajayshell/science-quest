@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level09: LevelDef = {
@@ -21,6 +22,7 @@ export const level09: LevelDef = {
       hint: 'The subscript 2 belongs to H. Oxygen has no number, so it is 1.',
       wrong: 'The 2 is a subscript on H. One water molecule has 2 hydrogen atoms and 1 oxygen.',
       success: 'H₂O has 2 hydrogen atoms. The missing number on O means 1.',
+      source: SRC.formulas,
     },
     {
       id: 'co2-o',
@@ -31,6 +33,7 @@ export const level09: LevelDef = {
       hint: 'The subscript 2 is on O, not on C.',
       wrong: 'In CO₂ the 2 counts oxygen. Carbon has no subscript, so there is 1 carbon.',
       success: 'CO₂ has 2 oxygen atoms and 1 carbon atom.',
+      source: SRC.formulas,
     },
     {
       id: 'glucose-c',
@@ -41,6 +44,7 @@ export const level09: LevelDef = {
       hint: 'Read only the number attached to C. The 12 belongs to hydrogen.',
       wrong: 'In C₆H₁₂O₆ the 6 after C means 6 carbons. The 12 is hydrogens, and the last 6 is oxygens.',
       success: 'Glucose has 6 carbons, 12 hydrogens, and 6 oxygens.',
+      source: SRC.formulas,
     },
     {
       id: 'hydroxide-h',
@@ -51,6 +55,7 @@ export const level09: LevelDef = {
       hint: 'The 2 outside the parentheses multiplies both O and H.',
       wrong: 'The group inside the parentheses is OH. The outside 2 doubles it, so hydrogen is 1 × 2 = 2.',
       success: 'Ca(OH)₂ has 2 hydrogens and 2 oxygens. The 2 multiplies the whole OH group.',
+      source: SRC.formulas,
     },
     {
       id: 'alum-o',
@@ -61,6 +66,7 @@ export const level09: LevelDef = {
       hint: 'Oxygen is inside the parentheses. Multiply 4 by the 3 outside.',
       wrong: 'SO₄ has 4 oxygens, and the group is taken 3 times. 4 × 3 = 12 oxygens.',
       success: 'Al₂(SO₄)₃ has 12 oxygen atoms. The outside 3 multiplies S and O, not the aluminum.',
+      source: SRC.formulas,
     },
     {
       id: 'coeff-h',
@@ -71,6 +77,7 @@ export const level09: LevelDef = {
       hint: 'The big 2 in front multiplies the whole molecule, including the subscript on H.',
       wrong: 'Each H₂O has 2 hydrogens. The coefficient 2 means two molecules: 2 × 2 = 4 hydrogens.',
       success: '2H₂O means two water molecules: 4 hydrogens and 2 oxygens.',
+      source: SRC.formulas,
     },
   ],
 };

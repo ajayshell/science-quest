@@ -17,7 +17,11 @@ export function mountLevel(host: HTMLElement, level: LevelDef, hooks: PlayHooks)
     case 'choice':
       return mountChoice(host, level.questions, hooks, 'retry');
     case 'table':
-      return mountTable(host, level.blanks, hooks);
+      return mountTable(
+        host,
+        level.blanks.map((blank) => blank.symbol),
+        hooks,
+      );
     case 'hunt':
       return mountHunt(host, level.prompts, hooks);
     case 'molecule':
@@ -35,6 +39,8 @@ export function mountLevel(host: HTMLElement, level: LevelDef, hooks: PlayHooks)
             hint: prompt.hint,
             wrong: prompt.wrong,
             success: prompt.success,
+            source: prompt.source,
+            note: prompt.note,
           }),
         ),
         hooks,

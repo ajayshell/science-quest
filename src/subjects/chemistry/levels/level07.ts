@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level07: LevelDef = {
@@ -21,15 +22,17 @@ export const level07: LevelDef = {
       hint: 'True neon is the gas sealed inside a glowing glass sign.',
       wrong: 'Not that one. Neon is the gas glowing inside the glass sign.',
       success: 'Neon is a noble gas. In a glass tube it glows red-orange.',
+      source: SRC.hunt,
     },
     {
       id: 'helium',
       scene: 'city',
       prompt: 'Find the helium.',
       targetId: 'balloon',
-      hint: 'Helium is the light gas that makes a balloon rise.',
+      hint: 'Helium gas is less dense than air, so a balloon of it rises.',
       wrong: 'Look for the balloon. Helium gas is what lifts it.',
-      success: 'Helium is lighter than air, so the balloon floats. It is a noble gas.',
+      success: 'Helium gas is less dense than air, so the balloon floats. It is a noble gas.',
+      source: SRC.hunt,
     },
     {
       id: 'aluminum',
@@ -38,7 +41,9 @@ export const level07: LevelDef = {
       targetId: 'can',
       hint: 'Drink cans are made from the light metal aluminum.',
       wrong: 'The drink can is aluminum. It is light and does not rust like iron.',
-      success: 'Aluminum cans are the element Al. A thin oxide coat keeps them from corroding.',
+      success: 'Drink cans are made mostly of aluminum metal. A thin oxide coat keeps them from corroding.',
+      note: 'Can stock is an aluminum alloy, commonly with a little manganese and magnesium, not pure Al.',
+      source: SRC.hunt,
     },
     {
       id: 'copper',
@@ -48,6 +53,7 @@ export const level07: LevelDef = {
       hint: 'Electrical wire is often copper, because copper conducts so well.',
       wrong: 'The coiled wire is copper. Copper is the reddish metal in many cables.',
       success: 'Copper wire carries electricity. The Statue of Liberty is covered in copper too.',
+      source: SRC.hunt,
     },
     {
       id: 'calcium',
@@ -56,7 +62,9 @@ export const level07: LevelDef = {
       targetId: 'bone',
       hint: 'Bones and teeth store most of the calcium in a person.',
       wrong: 'Calcium is stored in bone. The bone outline is the one you want.',
-      success: 'Bones store calcium. Limestone and seashells are calcium compounds too.',
+      success: 'Bones store calcium inside a compound, not as calcium metal. Limestone and seashells are calcium compounds too.',
+      note: 'Bone mineral is mostly hydroxyapatite, a calcium phosphate, not elemental calcium.',
+      source: SRC.hunt,
     },
     {
       id: 'iron',
@@ -65,7 +73,9 @@ export const level07: LevelDef = {
       targetId: 'blood',
       hint: 'Iron in hemoglobin carries oxygen in red blood cells.',
       wrong: 'Iron here is in the blood, not in a metal pan. Look for the drop.',
-      success: 'Hemoglobin uses iron to carry oxygen. That is the iron in your blood.',
+      success: 'Hemoglobin uses iron ions to carry oxygen. That iron is part of a molecule, not a chunk of metal.',
+      note: 'Heme iron switches between Fe2+ and Fe3+ as hemoglobin binds and releases oxygen.',
+      source: SRC.hunt,
     },
     {
       id: 'sodium',
@@ -74,7 +84,8 @@ export const level07: LevelDef = {
       targetId: 'salt',
       hint: 'Table salt is sodium chloride. The shaker holds the sodium compound.',
       wrong: 'Sodium in this kitchen is in the salt shaker, as part of NaCl.',
-      success: 'Table salt is NaCl. The sodium is bonded to chlorine, not floating free as metal.',
+      success: 'Table salt is NaCl. The sodium is the Na⁺ ion paired with Cl⁻, not sodium metal.',
+      source: SRC.hunt,
     },
     {
       id: 'gold',
@@ -83,7 +94,9 @@ export const level07: LevelDef = {
       targetId: 'ring',
       hint: 'Gold is the yellow metal that barely tarnishes. Look for the ring.',
       wrong: 'The ring is gold. Gold stays shiny because it barely reacts with air.',
-      success: 'Gold jewelry stays bright for centuries. Au hardly reacts with air or water.',
+      success: 'Gold hardly reacts with air or water, so the metal stays bright.',
+      note: 'Many rings are gold alloys, not pure Au. The element itself barely reacts with air or water.',
+      source: SRC.hunt,
     },
   ],
 };

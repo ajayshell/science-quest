@@ -142,14 +142,21 @@ export class DragBoard {
       else {
         drawNeonPanel(ctx, rect, zone.color, this.hot === zone.id);
         ctx.fillStyle = zone.color;
-        ctx.font = `700 ${rect.w < 130 ? 13 : 15}px Outfit, "Segoe UI", sans-serif`;
+        ctx.font = `700 ${rect.w < 150 ? 13 : 15}px Outfit, "Segoe UI", sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(zone.label, rect.x + rect.w / 2, rect.y + 20, rect.w - 12);
+        const labelLines = wrapLabel(ctx, zone.label, rect.w - 16);
+        labelLines.forEach((line, index) => {
+          ctx.fillText(line, rect.x + rect.w / 2, rect.y + 16 + index * 15);
+        });
         if (zone.sub) {
           ctx.fillStyle = 'rgba(244, 247, 255, 0.62)';
           ctx.font = '500 11px Outfit, "Segoe UI", sans-serif';
-          ctx.fillText(zone.sub, rect.x + rect.w / 2, rect.y + 38, rect.w - 12);
+          const subLines = wrapLabel(ctx, zone.sub, rect.w - 16);
+          const subY = rect.y + 16 + labelLines.length * 15 + 2;
+          subLines.forEach((line, index) => {
+            ctx.fillText(line, rect.x + rect.w / 2, subY + index * 13);
+          });
         }
       }
     }
@@ -235,6 +242,7 @@ export class DragBoard {
     if (!this.drag || event.pointerId !== this.drag.pointer) return;
     const point = this.local(event);
     const moved = Math.hypot(point.x - this.drag.originX, point.y - this.drag.originY) > 12;
+    if (moved) event.preventDefault();
     this.drag.x = point.x - this.drag.dx;
     this.drag.y = point.y - this.drag.dy - (moved ? this.drag.lift : 0);
     const chip = this.chips.find((item) => item.id === this.drag?.id);
@@ -313,21 +321,48 @@ export class DragBoard {
   }
 }
 
+const BIN_PAD = 12;
+const BIN_GAP = 8;
+
+/** Narrow bins stay in one row so the cards and the bins fit on a phone together. */
+function binFrame(width: number, zones: Zone[]): { zoneW: number; zoneH: number; blockH: number } {
+  const count = Math.max(1, zones.length);
+  const zoneW = (width - BIN_PAD * 2 - BIN_GAP * (count - 1)) / count;
+  const zoneH = zoneW < 160 ? 172 : 210;
+  return { zoneW, zoneH, blockH: zoneH };
+}
+
+function wrapLabel(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(next).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.slice(0, 2);
+}
+
 export function layoutBins(
   width: number,
   _height: number,
   zones: Zone[],
   chips: Chip[],
 ): { zones: Record<string, Rect>; chips: Record<string, Rect> } {
-  const pad = 12;
-  const gap = 8;
-  const zoneH = 210;
-  const zoneW = (width - pad * 2 - gap * (zones.length - 1)) / Math.max(1, zones.length);
+  const pad = BIN_PAD;
+  const gap = BIN_GAP;
+  const frame = binFrame(width, zones);
   const zoneRects: Record<string, Rect> = {};
   zones.forEach((zone, index) => {
-    zoneRects[zone.id] = { x: pad + index * (zoneW + gap), y: pad, w: zoneW, h: zoneH };
+    zoneRects[zone.id] = { x: pad + index * (frame.zoneW + gap), y: pad, w: frame.zoneW, h: frame.zoneH };
   });
-  const trayTop = pad + zoneH + 12;
+  const trayTop = pad + frame.blockH + 12;
   const free = chips.filter((chip) => !chip.locked);
   const cols = Math.max(2, Math.min(free.length || 1, Math.floor((width - pad * 2 + gap) / 112) || 2));
   const tokenW = (width - pad * 2 - gap * (cols - 1)) / cols;
@@ -347,23 +382,24 @@ export function layoutBins(
     const rect = zoneRects[zone.id];
     if (!rect) continue;
     const inside = chips.filter((chip) => chip.locked && chip.zoneId === zone.id);
+    const head = rect.h < 190 ? 68 : 50;
     inside.forEach((chip, index) => {
       chipRects[chip.id] = {
         x: rect.x + 8,
-        y: rect.y + 50 + index * 36,
+        y: rect.y + head + index * 34,
         w: rect.w - 16,
-        h: 32,
+        h: 30,
       };
     });
   }
   return { zones: zoneRects, chips: chipRects };
 }
 
-export function binsHeight(width: number, _zones: Zone[], chips: Chip[]): number {
-  const pad = 12;
-  const gap = 8;
+export function binsHeight(width: number, zones: Zone[], chips: Chip[]): number {
+  const pad = BIN_PAD;
+  const gap = BIN_GAP;
   const free = chips.filter((chip) => !chip.locked).length;
   const cols = Math.max(2, Math.min(Math.max(free, 1), Math.floor((width - pad * 2 + gap) / 112) || 2));
   const rows = Math.max(1, Math.ceil(free / cols));
-  return pad + 210 + 12 + rows * 66 + pad;
+  return pad + binFrame(width, zones).blockH + 12 + rows * 66 + pad;
 }

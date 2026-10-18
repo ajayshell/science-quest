@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { atomCount, countAtoms, formulaHtml } from './formula.ts';
+import { atomCount, countAtoms, equationBalances, formulaHtml } from './formula.ts';
 
 describe('countAtoms', () => {
   it('counts water, glucose, and salt', () => {
@@ -32,6 +32,16 @@ describe('countAtoms', () => {
     expect(() => countAtoms('H2O)')).toThrow();
     expect(() => countAtoms('2')).toThrow();
     expect(() => countAtoms('h2o')).toThrow();
+  });
+});
+
+describe('equationBalances', () => {
+  it('accepts a balanced reaction and rejects one that is not', () => {
+    expect(equationBalances('NaHCO3 + CH3COOH -> CH3COONa + H2O + CO2')).toBe(true);
+    expect(equationBalances('2H2 + O2 -> 2H2O')).toBe(true);
+    expect(equationBalances('H2 + O2 -> H2O')).toBe(false);
+    expect(equationBalances('H2O')).toBe(false);
+    expect(equationBalances('H2O ->')).toBe(false);
   });
 });
 

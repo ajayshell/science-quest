@@ -168,10 +168,11 @@ export function mountMolecule(host: HTMLElement, molecules: MoleculeDef[], hooks
       const slot = current.slots.find((item) => item.id === zoneId);
       if (!chip || chip.locked || !slot) return { accept: false };
       if (chips.some((item) => item.locked && item.zoneId === slot.id)) return { accept: false };
+      const scope = `${current.id}:${slot.id}`;
       if (chip.meta !== slot.element) {
         misses[slot.id] = (misses[slot.id] ?? 0) + 1;
-        if (!hooks.session.wasAttempted(slot.id)) {
-          hooks.session.answer(slot.id, false, hooks.speedMs);
+        if (!hooks.session.wasAttempted(scope)) {
+          hooks.session.answer(scope, false, hooks.speedMs);
           hooks.onHud();
         }
         const needed = bySymbol.get(slot.element)?.name ?? slot.element;
@@ -181,7 +182,7 @@ export function mountMolecule(host: HTMLElement, molecules: MoleculeDef[], hooks
       }
       chip.locked = true;
       chip.zoneId = slot.id;
-      const tick = hooks.session.answer(slot.id, true, hooks.speedMs);
+      const tick = hooks.session.answer(scope, true, hooks.speedMs);
       hooks.float(formatGain(tick), true);
       hooks.onHud();
       const done = current.slots.every((item) => chips.some((entry) => entry.locked && entry.zoneId === item.id));

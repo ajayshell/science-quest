@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import { choice } from './helpers.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
@@ -26,6 +27,7 @@ export const level04: LevelDef = {
       hint: 'Oxygen is just the letter O.',
       wrong: 'Oxygen is O. Os is osmium, and Og is oganesson.',
       success: 'Oxygen is O, atomic number 8.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'sodium',
@@ -40,6 +42,7 @@ export const level04: LevelDef = {
       hint: 'Sodium does not start with S. The symbol comes from the Latin name natrium.',
       wrong: 'Sodium is Na. S is sulfur, and N is nitrogen.',
       success: 'Sodium is Na, from natrium. S belongs to sulfur.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'gold',
@@ -54,6 +57,7 @@ export const level04: LevelDef = {
       hint: 'Gold’s Latin name is aurum. The symbol starts with Au.',
       wrong: 'Gold is Au. Ag is silver, and Gd is gadolinium.',
       success: 'Gold is Au. Silver, the other shiny coin metal, is Ag.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'iron',
@@ -68,6 +72,7 @@ export const level04: LevelDef = {
       hint: 'Iron’s symbol comes from ferrum, not from the English spelling.',
       wrong: 'Iron is Fe. Ir is iridium, I is iodine, and Fr is francium.',
       success: 'Iron is Fe. That same symbol shows up in the formula for rust, Fe₂O₃.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'silver',
@@ -82,6 +87,7 @@ export const level04: LevelDef = {
       hint: 'Silver’s Latin name is argentum.',
       wrong: 'Silver is Ag. Au is gold, Si is silicon, and S is sulfur.',
       success: 'Silver is Ag, from argentum.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'potassium',
@@ -96,6 +102,7 @@ export const level04: LevelDef = {
       hint: 'Potassium’s symbol comes from kalium.',
       wrong: 'Potassium is K. P is phosphorus, Po is polonium, and Pt is platinum.',
       success: 'Potassium is K. It sits under sodium in the alkali metals.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'cu',
@@ -112,6 +119,7 @@ export const level04: LevelDef = {
       hint: 'Cu comes from cuprum, the old name for copper.',
       wrong: 'Cu is copper. Cobalt is Co, carbon is C, and calcium is Ca.',
       success: 'Cu is copper, the metal in electrical wire.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'he',
@@ -127,7 +135,8 @@ export const level04: LevelDef = {
       correctId: 'helium',
       hint: 'He is the noble gas that fills floating balloons.',
       wrong: 'He is helium. Hydrogen is H, neon is Ne, and oxygen is O.',
-      success: 'He is helium, the light noble gas.',
+      success: 'He is helium. Helium gas is less dense than air, which is why a balloon of it rises.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'chlorine',
@@ -142,6 +151,7 @@ export const level04: LevelDef = {
       hint: 'Chlorine needs both letters, C and a lowercase l.',
       wrong: 'Chlorine is Cl. C is carbon, Ca is calcium, and Cr is chromium.',
       success: 'Chlorine is Cl. With sodium it makes NaCl, table salt.',
+      source: SRC.symbols,
     }),
     choice({
       id: 'iodine',
@@ -155,7 +165,9 @@ export const level04: LevelDef = {
       correctId: 'I',
       hint: 'Iodine is a single capital I.',
       wrong: 'Iodine is I. Ir is iridium, and In is indium.',
-      success: 'Iodine is I, the halogen in iodized salt.',
+      success: 'Iodine is I. Iodized salt contains an iodine compound, usually potassium iodide, not crystals of the element.',
+      note: 'Iodized salt is NaCl plus a small amount of KI or NaI. It does not contain solid I2.',
+      source: SRC.symbols,
     }),
   ],
 };

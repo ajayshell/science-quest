@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level06: LevelDef = {
@@ -28,6 +29,7 @@ export const level06: LevelDef = {
           hint: 'Sodium sits in group 1, under lithium. Alkali metal.',
           wrong: 'Sodium is an alkali metal. These metals are soft and very reactive.',
           success: 'Sodium is an alkali metal. It reacts quickly with water.',
+          source: SRC.families,
         },
         {
           id: 'k',
@@ -37,6 +39,7 @@ export const level06: LevelDef = {
           hint: 'Potassium is directly under sodium in group 1.',
           wrong: 'Potassium is an alkali metal, in the same column as sodium.',
           success: 'Potassium is an alkali metal. Your nerves need the K⁺ ion.',
+          source: SRC.families,
         },
         {
           id: 'cl',
@@ -46,6 +49,7 @@ export const level06: LevelDef = {
           hint: 'Chlorine is in group 17, the halogen column.',
           wrong: 'Chlorine is a halogen. Halogens form salts with metals.',
           success: 'Chlorine is a halogen. With sodium it makes table salt.',
+          source: SRC.families,
         },
         {
           id: 'f',
@@ -55,6 +59,7 @@ export const level06: LevelDef = {
           hint: 'Fluorine is the top halogen, above chlorine.',
           wrong: 'Fluorine is a halogen, the most reactive one.',
           success: 'Fluorine is a halogen. Fluoride compounds help tooth enamel.',
+          source: SRC.families,
         },
         {
           id: 'ne',
@@ -64,6 +69,7 @@ export const level06: LevelDef = {
           hint: 'Neon is a group 18 gas that glows in signs.',
           wrong: 'Neon is a noble gas. Noble gases rarely form compounds.',
           success: 'Neon is a noble gas. It glows red-orange in a true neon sign.',
+          source: SRC.families,
         },
         {
           id: 'ar',
@@ -73,6 +79,7 @@ export const level06: LevelDef = {
           hint: 'Argon is the noble gas under neon.',
           wrong: 'Argon is a noble gas. It makes up nearly 1% of air.',
           success: 'Argon is a noble gas and the third most common gas in air.',
+          source: SRC.families,
         },
       ],
     },
@@ -80,7 +87,7 @@ export const level06: LevelDef = {
       instruction: 'Metal, nonmetal, or metalloid?',
       zones: [
         { id: 'metal', label: 'Metals', sub: 'Shiny, conduct', color: '#7eb6ff' },
-        { id: 'nonmetal', label: 'Nonmetals', sub: 'Dull or gaseous', color: '#5ef2ff' },
+        { id: 'nonmetal', label: 'Nonmetals', sub: 'Poor conductors', color: '#5ef2ff' },
         { id: 'metalloid', label: 'Metalloids', sub: 'In between', color: '#c6ff4d' },
       ],
       items: [
@@ -89,9 +96,10 @@ export const level06: LevelDef = {
           label: 'Iron',
           sub: 'Fe',
           zoneId: 'metal',
-          hint: 'Iron is a shiny conductor you can bend into nails. Metal.',
+          hint: 'Iron is a metal. Nails and steel are made mostly from it.',
           wrong: 'Iron is a metal. It conducts electricity and can be hammered into shape.',
           success: 'Iron is a transition metal. Steel is mostly iron.',
+          source: SRC.families,
         },
         {
           id: 'cu',
@@ -101,6 +109,7 @@ export const level06: LevelDef = {
           hint: 'Copper wire carries electricity because copper is a metal.',
           wrong: 'Copper is a metal. That is why we make wire from it.',
           success: 'Copper is a metal and an excellent conductor.',
+          source: SRC.families,
         },
         {
           id: 'o',
@@ -110,6 +119,7 @@ export const level06: LevelDef = {
           hint: 'Oxygen is a gas you breathe. That is a nonmetal.',
           wrong: 'Oxygen is a nonmetal. It is a gas at room temperature.',
           success: 'Oxygen is a nonmetal. The O₂ you breathe is this element.',
+          source: SRC.families,
         },
         {
           id: 's',
@@ -118,7 +128,9 @@ export const level06: LevelDef = {
           zoneId: 'nonmetal',
           hint: 'Yellow sulfur does not conduct like a metal. Nonmetal.',
           wrong: 'Sulfur is a nonmetal, a brittle yellow solid.',
-          success: 'Sulfur is a nonmetal. It sits next to the metalloids on the table.',
+          success: 'Sulfur is a nonmetal in group 16. Silicon, two columns to its left, is the metalloid.',
+          note: 'Sulfur is not adjacent to a metalloid. Phosphorus sits between sulfur and silicon.',
+          source: SRC.families,
         },
         {
           id: 'si',
@@ -128,6 +140,7 @@ export const level06: LevelDef = {
           hint: 'Silicon is on the staircase between metals and nonmetals. Metalloid.',
           wrong: 'Silicon is a metalloid. It conducts electricity better than a nonmetal, worse than a metal.',
           success: 'Silicon is a metalloid. Computer chips depend on that in-between behavior.',
+          source: SRC.families,
         },
         {
           id: 'b',
@@ -135,8 +148,9 @@ export const level06: LevelDef = {
           sub: 'B',
           zoneId: 'metalloid',
           hint: 'Boron is the metalloid at the top of group 13.',
-          wrong: 'Boron is a metalloid, not a metal, even though it sits beside aluminum.',
+          wrong: 'Boron is a metalloid, not a metal. Aluminum sits under it in the same column, and aluminum is a metal.',
           success: 'Boron is a metalloid. Aluminum, right under it, is a metal.',
+          source: SRC.families,
         },
       ],
     },

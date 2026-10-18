@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
 const solid = '#ffc857';
@@ -34,6 +35,7 @@ export const level01: LevelDef = {
           hint: 'Ice keeps a shape until it melts. That is a solid.',
           wrong: 'Ice keeps its own shape. It is a solid, even though it is made of water.',
           success: 'Ice is solid water. Heat it and the same substance becomes liquid, then gas.',
+          source: SRC.matter,
         },
         {
           id: 'wood',
@@ -43,6 +45,7 @@ export const level01: LevelDef = {
           hint: 'A wood block does not flow or spread out. Solid.',
           wrong: 'Wood holds its shape. It belongs with the solids.',
           success: 'Wood is a solid. It is also a mixture of many compounds, which is the next round.',
+          source: SRC.matter,
         },
         {
           id: 'milk',
@@ -52,6 +55,7 @@ export const level01: LevelDef = {
           hint: 'Milk pours and takes the shape of the glass. Liquid.',
           wrong: 'Milk pours. It is a liquid.',
           success: 'Milk is a liquid. It is also a mixture, not a single pure substance.',
+          source: SRC.matter,
         },
         {
           id: 'rain',
@@ -61,15 +65,18 @@ export const level01: LevelDef = {
           hint: 'A raindrop is liquid water.',
           wrong: 'Rain is liquid water on its way to the ground.',
           success: 'A raindrop is liquid water.',
+          source: SRC.matter,
         },
         {
           id: 'steam',
-          label: 'Steam',
-          sub: 'Above a kettle',
+          label: 'Water vapor',
+          sub: 'Gas from boiling water',
           zoneId: 'gas',
-          hint: 'Steam is water that has become a gas.',
-          wrong: 'Steam does not have its own shape. It is water as a gas.',
-          success: 'Steam is gaseous water. Same substance as ice, different state.',
+          hint: 'Water vapor is the gas. The white cloud you see is tiny liquid drops.',
+          wrong: 'The invisible gas from boiling water is water vapor. The white cloud is liquid droplets, not the gas.',
+          success: 'Water vapor is gaseous water, the same substance as ice. The white cloud above a kettle is liquid drops, not the gas.',
+          source: SRC.matter,
+          note: 'The white cloud called steam is condensed liquid droplets. Water vapor itself is invisible.',
         },
         {
           id: 'helium',
@@ -78,7 +85,9 @@ export const level01: LevelDef = {
           zoneId: 'gas',
           hint: 'The helium inside a balloon is a gas. That is why the balloon puffs out.',
           wrong: 'Helium spreads to fill the balloon. It is a gas.',
-          success: 'Helium is a noble-gas element. A balloon full of it floats.',
+          success: 'Helium is a noble-gas element. Helium gas is less dense than air, so a balloon full of it rises.',
+          note: 'The balloon rises when the balloon plus the helium is less dense than the surrounding air.',
+          source: SRC.matter,
         },
       ],
     },
@@ -97,6 +106,7 @@ export const level01: LevelDef = {
           hint: 'Distilled water is just H₂O, a compound. That is a pure substance.',
           wrong: 'Distilled water is only one compound, H₂O. Pure substance.',
           success: 'H₂O is a compound, and a single compound is a pure substance.',
+          source: SRC.matter,
         },
         {
           id: 'gold',
@@ -106,6 +116,7 @@ export const level01: LevelDef = {
           hint: 'A gold bar of the element Au is a pure substance.',
           wrong: 'Gold is a single element. Elements are pure substances.',
           success: 'Gold is an element, so a pure gold bar is a pure substance.',
+          source: SRC.matter,
         },
         {
           id: 'oxygen',
@@ -115,6 +126,7 @@ export const level01: LevelDef = {
           hint: 'A tank of only O₂ is one substance, even though each molecule has two atoms.',
           wrong: 'O₂ is one substance: the element oxygen. It is not a mixture.',
           success: 'O₂ is the element oxygen written as a molecule. Still a pure substance.',
+          source: SRC.matter,
         },
         {
           id: 'saltwater',
@@ -124,6 +136,7 @@ export const level01: LevelDef = {
           hint: 'Salt water is salt and water together. You can separate them. Mixture.',
           wrong: 'Salt water contains salt and water. That is a mixture, called a solution.',
           success: 'Salt water is a mixture. Evaporate it and the salt stays behind.',
+          source: SRC.matter,
         },
         {
           id: 'trail',
@@ -133,6 +146,7 @@ export const level01: LevelDef = {
           hint: 'You can see the different pieces. Trail mix is a mixture.',
           wrong: 'Trail mix is several foods in one bag. Mixture.',
           success: 'Trail mix is a mixture. The parts keep their own properties.',
+          source: SRC.matter,
         },
         {
           id: 'air',
@@ -142,6 +156,7 @@ export const level01: LevelDef = {
           hint: 'Air is mostly nitrogen and oxygen, plus other gases. Mixture.',
           wrong: 'Air is several gases together. It is a mixture, not one element.',
           success: 'Air is a mixture of gases, mostly N₂ and O₂.',
+          source: SRC.matter,
         },
       ],
     },

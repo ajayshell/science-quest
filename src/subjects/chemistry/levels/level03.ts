@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import { choice } from './helpers.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
@@ -15,7 +16,7 @@ export const level03: LevelDef = {
   questions: [
     choice({
       id: 'gold',
-      prompt: 'A gold ring is pure Au. What is it?',
+      prompt: 'A sample of pure gold is Au. What is it?',
       figure: 'Au',
       figureKind: 'symbol',
       choices: [
@@ -26,6 +27,7 @@ export const level03: LevelDef = {
       hint: 'Au is one kind of atom. One kind of atom means element.',
       wrong: 'Gold is a single element. A compound needs at least two different elements.',
       success: 'Gold is an element. Its symbol, Au, comes from the Latin aurum.',
+      source: SRC.matter,
     }),
     choice({
       id: 'water',
@@ -40,6 +42,7 @@ export const level03: LevelDef = {
       hint: 'Look at the capital letters. H and O are two different elements.',
       wrong: 'Water has hydrogen and oxygen bonded together. Two elements make a compound.',
       success: 'Water is a compound: hydrogen and oxygen bonded in a fixed ratio.',
+      source: SRC.matter,
     }),
     choice({
       id: 'o2',
@@ -54,6 +57,7 @@ export const level03: LevelDef = {
       hint: 'Both atoms are oxygen. Same element, twice.',
       wrong: 'O₂ is two oxygen atoms. It is still one element, just written as a molecule.',
       success: 'O₂ is a molecular element. A compound would need a second element in the formula.',
+      source: SRC.matter,
     }),
     choice({
       id: 'co2',
@@ -68,6 +72,7 @@ export const level03: LevelDef = {
       hint: 'C and O are different elements bonded together.',
       wrong: 'CO₂ contains carbon and oxygen. That is a compound.',
       success: 'Carbon dioxide is a compound. You exhale it, and plants take it in.',
+      source: SRC.matter,
     }),
     choice({
       id: 'he',
@@ -81,7 +86,9 @@ export const level03: LevelDef = {
       correctId: 'element',
       hint: 'He is a single symbol with no other element attached.',
       wrong: 'Helium is a noble-gas element. It does not form a compound here.',
-      success: 'Helium is an element. It is lighter than air, so the balloon rises.',
+      success: 'Helium is an element. Helium gas is less dense than air, so the balloon rises.',
+      note: 'A helium-filled balloon rises when the balloon plus the gas is less dense than the surrounding air.',
+      source: SRC.matter,
     }),
     choice({
       id: 'salt',
@@ -96,10 +103,11 @@ export const level03: LevelDef = {
       hint: 'Na is sodium and Cl is chlorine. Two elements.',
       wrong: 'NaCl joins sodium and chlorine. That is a compound, called sodium chloride.',
       success: 'Salt is the compound sodium chloride. Sodium and chlorine are very different on their own.',
+      source: SRC.matter,
     }),
     choice({
       id: 'iron',
-      prompt: 'An iron nail is the metal Fe. What is it?',
+      prompt: 'The metal iron has the symbol Fe. What is iron?',
       figure: 'Fe',
       figureKind: 'symbol',
       choices: [
@@ -107,9 +115,10 @@ export const level03: LevelDef = {
         { id: 'compound', label: 'Compound' },
       ],
       correctId: 'element',
-      hint: 'Fe is the symbol for one element, iron.',
-      wrong: 'Iron is an element. Rust is the compound you get after iron reacts with oxygen.',
+      hint: 'Fe is the symbol for one element, iron. A nail is mostly iron, but the metal itself is the element.',
+      wrong: 'Iron is an element. A steel nail is mostly iron. Rust is the compound you get after iron reacts with oxygen and water.',
       success: 'Iron is an element. Its symbol Fe comes from the Latin ferrum.',
+      source: SRC.matter,
     }),
     choice({
       id: 'glucose',
@@ -124,6 +133,7 @@ export const level03: LevelDef = {
       hint: 'Count the capital letters: C, H, and O.',
       wrong: 'Glucose contains carbon, hydrogen, and oxygen. Three elements make a compound.',
       success: 'Glucose is a compound. Your cells use this sugar for energy.',
+      source: SRC.matter,
     }),
   ],
 };

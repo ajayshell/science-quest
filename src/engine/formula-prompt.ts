@@ -11,6 +11,8 @@ export function formulaCount(input: {
   wrong: string;
   success: string;
   prompt?: string;
+  source: string;
+  note?: string;
 }): ChoiceDef {
   const answer = atomCount(input.formula, input.element);
   if (!input.choices.includes(answer)) {
@@ -26,5 +28,7 @@ export function formulaCount(input: {
     hint: input.hint,
     wrong: input.wrong,
     success: input.success,
+    source: input.source,
+    note: input.note,
   };
 }

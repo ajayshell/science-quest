@@ -96,6 +96,7 @@ Progress is stored per profile and per subject. A save from before the picker (o
 ## 6. Tech
 - **Stack:** Vite + TypeScript, an HTML canvas for drag-and-snap (PixiJS if needed), and CSS for the UI.
 - **Content as data:** each level is a JSON or TS file, and the periodic table data comes from a public dataset, so new levels don't need engine changes.
+- **Sources are required:** every graded item, table blank, element fact, and card has a `source` string that names where the fact was checked (IUPAC CIAAW and NIST for element identity, OpenStax Chemistry 2e or Chemistry: Atoms First for concepts, PubChem for compound formulas). An optional `note` records a caveat the student sentence does not carry. New content without a source is not allowed. Tests reject a missing source, more than one correct answer, a duplicate id inside a level, a formula whose slots do not match the atom count, and an equation that does not balance.
 - **Storage:** see section 6a.
 - **Runs** with `npm run dev`, and `npm run build` makes a static site ready for Vercel.
 - **Repo:** a git project in `/Users/ajay/Documents/Dev_Cloud/workspace/science-quest`. GitHub and Vercel come later.
@@ -122,5 +123,6 @@ Progress is stored per profile and per subject. A save from before the picker (o
 - Subject picker: **Decided (Oct 18, 2026).** Home is the subject picker. Chemistry is playable. Physics, Math, and Biology are coming-soon tiles. Each subject is a registered module with its own worlds and levels. Progress is per subject, and older chemistry-only saves migrate without loss.
 - Navigation: **Decided (Oct 18, 2026).** Home → Who's playing? → subject hub → levels. Who's playing shows big tiles labeled 7th grader, 9th grader, and Parent, with avatar and name. After Home, a top bar always shows Home, the current player, Switch player, and Back when a screen sits under the hub.
 - Parent unlock: **Decided (Oct 18, 2026).** The parent profile can play every level, world, and boss. Kids keep the normal one-after-another unlock.
+- Content citations: **Decided (Oct 18, 2026).** Every graded item, table blank, element fact, and card carries a `source`. `note` is optional. Tests enforce one correct answer, unique ids inside a level, formula atom counts, balanced equations, and the vendored element data.
 - Should there be sound and music?
 - Should the parent profile be able to set difficulty? Unlocking tracks is already decided: the parent can play everything, and kids follow the normal path.

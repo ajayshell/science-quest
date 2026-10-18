@@ -1,3 +1,9 @@
+/** Where a fact was checked. `note` records a caveat that the student text does not need to carry. */
+export type Citation = {
+  source: string;
+  note?: string;
+};
+
 export type ZoneDef = {
   id: string;
   label: string;
@@ -5,7 +11,7 @@ export type ZoneDef = {
   color: string;
 };
 
-export type SortItemDef = {
+export type SortItemDef = Citation & {
   id: string;
   label: string;
   sub: string;
@@ -21,7 +27,7 @@ export type SortRoundDef = {
   items: SortItemDef[];
 };
 
-export type ChoiceDef = {
+export type ChoiceDef = Citation & {
   id: string;
   prompt: string;
   figure?: string;
@@ -33,7 +39,7 @@ export type ChoiceDef = {
   success: string;
 };
 
-export type AtomChallengeDef = {
+export type AtomChallengeDef = Citation & {
   symbol: string;
   massNumber: number;
   hint: string;
@@ -41,7 +47,7 @@ export type AtomChallengeDef = {
 
 export type HuntSceneId = 'city' | 'body' | 'kitchen';
 
-export type HuntPromptDef = {
+export type HuntPromptDef = Citation & {
   id: string;
   scene: HuntSceneId;
   prompt: string;
@@ -51,7 +57,7 @@ export type HuntPromptDef = {
   success: string;
 };
 
-export type MoleculeDef = {
+export type MoleculeDef = Citation & {
   id: string;
   name: string;
   formula: string;
@@ -62,9 +68,11 @@ export type MoleculeDef = {
   bank: string[];
   hint: string;
   success: string;
+  /** Optional reaction the success text teaches. Must balance. */
+  equation?: string;
 };
 
-export type FormulaPromptDef = {
+export type FormulaPromptDef = Citation & {
   id: string;
   formula: string;
   element: string;
@@ -73,6 +81,10 @@ export type FormulaPromptDef = {
   hint: string;
   wrong: string;
   success: string;
+};
+
+export type TableBlank = Citation & {
+  symbol: string;
 };
 
 type LevelBase = {
@@ -93,7 +105,7 @@ export type LevelDef = LevelBase &
     | { kind: 'sort'; rounds: SortRoundDef[] }
     | { kind: 'atom'; challenges: AtomChallengeDef[] }
     | { kind: 'choice'; questions: ChoiceDef[] }
-    | { kind: 'table'; blanks: string[] }
+    | { kind: 'table'; blanks: TableBlank[] }
     | { kind: 'hunt'; prompts: HuntPromptDef[] }
     | { kind: 'molecule'; molecules: MoleculeDef[] }
     | { kind: 'formula'; prompts: FormulaPromptDef[] }
