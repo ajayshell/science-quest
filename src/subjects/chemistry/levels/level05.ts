@@ -1,4 +1,4 @@
-import type { LevelDef } from './types.ts';
+import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level05: LevelDef = {
   id: 'w2-table-puzzle',

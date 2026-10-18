@@ -15,7 +15,8 @@ export function renderHelp(root: HTMLElement, ctx: AppCtx): () => void {
     ['Stars', '3 stars: perfect first tries, no hints, under the star time. 2 stars: at least 80% first tries, at most one hint, and within 1.5× the star time. Finishing always earns at least 1 star.'],
     ['Hints', `A hint costs ${HINT_COST} points. It is spent when the level ends, even if you do not beat your best score.`],
     ['Replay', 'Only the part of your score above your best is added. Stars never go down.'],
-    ['Save', 'Each profile keeps its own points, stars, and cards in this browser. Export a JSON backup from the profile screen.'],
+    ['Save', 'Each profile keeps its own points, stars, and cards for each subject in this browser. Export a JSON backup from the profile screen.'],
+    ['Parent', 'The parent profile can open every level, world, and boss. Students unlock the next level by finishing the one before it.'],
   ];
   const list = el('div', 'help-list');
   for (const [title, body] of items) {

@@ -1,9 +1,9 @@
 # Science Quest: Chemistry — Game Spec
 
-_Version 0.3, Oct 18 2026. A living doc to iterate on._
+_Version 0.4, Oct 18 2026. A living doc to iterate on._
 
 ## 1. Goal
-A visual, points-based web game that teaches Ajay's kids chemistry, from 7th grade up through AP Chemistry. It grows with them and later adds Physics and Biology worlds, in the spirit of [SineRider](https://sinerider.com).
+A visual, points-based web game that teaches Ajay's kids chemistry, from 7th grade up through AP Chemistry. It grows with them and later adds Physics, Math, and Biology, in the spirit of [SineRider](https://sinerider.com).
 
 - **Players:** 7th grader (BHMS) and 9th grader (RBHS), Poway USD.
 - **Curriculum:** California NGSS (MS-PS1, HS-PS1), plus the College Board AP Chemistry course framework (Units 1–9).
@@ -77,8 +77,16 @@ This track unlocks after Track A World 6, or a parent can unlock it. It follows 
 
 - **AP Exam Mode:** timed multiple-choice sets plus free-response-style multi-step problems, scored the way the AP rubrics are.
 
-## 5. Later subjects (same hub)
+## 5. Subjects
+After a profile is chosen, a subject picker comes before that subject's hub. **Chemistry** is playable. **Physics**, **Math**, and **Biology** show as coming-soon tiles until their levels exist. The hub has a way back to the picker.
+
+Each subject is a module: its own worlds and levels folder, registered in one list (`src/subjects/`). The hub and the play engine only read that module. Adding a subject, or filling in Physics or Math later, does not require hub or engine changes.
+
+Progress is stored per profile and per subject. A save from before the picker (one progress blob per profile) is chemistry progress. The store migrates it in place, with no loss of points, stars, or cards.
+
+### Later subject ideas
 - **Physics:** graph-to-launch motion puzzles like SineRider, plus forces, energy, waves, and circuits.
+- **Math:** patterns, number puzzles, and the quantities the science levels already use.
 - **Biology:** cell builder, DNA and protein puzzles, and ecosystems and food webs.
 
 ## 6. Tech
@@ -89,7 +97,8 @@ This track unlocks after Track A World 6, or a parent can unlock it. It follows 
 - **Repo:** a git project in `/Users/ajay/Documents/Dev_Cloud/workspace/science-quest`. GitHub and Vercel come later.
 
 ## 6a. Saving progress
-- **Phase 1 (M1–M3), local profiles:** a profile picker with an avatar and name for each kid and one for the parent. Progress (points, stars, cards, streaks) is saved in the browser's localStorage. This works the same when it's hosted on Vercel, but progress stays on that one device and browser.
+- **Phase 1 (M1–M3), local profiles:** a profile picker with an avatar and name for each kid and one for the parent. Progress (points, stars, cards, streaks) is saved in the browser's localStorage, separately for each subject. This works the same when it's hosted on Vercel, but progress stays on that one device and browser.
+- **Parent profile:** every level, world, and boss is unlocked. Kid profiles still open the next level only after the previous one is completed.
 - **Backups:** Export and Import buttons save and load progress as a JSON file, because clearing browser data wipes it.
 - **Storage layer:** all reads and writes go through one `ProgressStore` interface (`LocalProgressStore` now), so the game code never calls localStorage directly.
 - **Phase 2 (when deployed), Google sign-in:** Auth.js with a Google provider on Vercel, plus a free database (Vercel Postgres, Neon, or Supabase) behind a `CloudProgressStore`. On first sign-in, the local progress is imported into that account. Use personal or family Google accounts; Poway USD school accounts may block outside apps. One-time setup: a Google Cloud OAuth client.
@@ -106,5 +115,7 @@ This track unlocks after Track A World 6, or a parent can unlock it. It follows 
 ## 8. Open questions
 - What units are the kids actually covering this semester? We could reorder the levels to match.
 - Art style: **Decided (Oct 18, 2026).** Sleek neon, in the spirit of SineRider. Dark background, glowing neon lines and accents, smooth glow feedback, and clean modern type. High contrast and clear labels so a 7th grader can read everything easily.
+- Subject picker: **Decided (Oct 18, 2026).** A picker sits between the profile screen and a subject's hub. Chemistry is playable. Physics, Math, and Biology are coming-soon tiles. Each subject is a registered module with its own worlds and levels. Progress is per subject, and older chemistry-only saves migrate without loss.
+- Parent unlock: **Decided (Oct 18, 2026).** The parent profile can play every level, world, and boss. Kids keep the normal one-after-another unlock.
 - Should there be sound and music?
-- Should the parent profile be able to set difficulty and unlock tracks?
+- Should the parent profile be able to set difficulty? Unlocking tracks is already decided: the parent can play everything, and kids follow the normal path.

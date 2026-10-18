@@ -1,5 +1,5 @@
 import { bySymbol, elementColor } from '../data/elements.ts';
-import type { MoleculeDef } from '../data/levels/types.ts';
+import type { MoleculeDef } from '../engine/level-def.ts';
 import { formatGain } from '../scoring.ts';
 import { DragBoard, type Chip, type Zone } from './board.ts';
 import { FONT, type Rect } from './draw.ts';

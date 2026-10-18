@@ -9,7 +9,7 @@ export function renderProfiles(root: HTMLElement, ctx: AppCtx): () => void {
   hero.innerHTML = markSvg();
   hero.append(el('p', 'eyebrow', 'Science Quest'));
   hero.append(el('h1', 'display', "Who's playing?"));
-  hero.append(el('p', 'lede', 'Two students and one parent. Points, stars, and cards stay with the player you pick.'));
+  hero.append(el('p', 'lede', 'Two students and one parent. Next you pick a subject. Points and cards stay with the player you pick.'));
   screen.append(hero);
 
   const grid = el('div', 'profile-grid');
@@ -48,7 +48,7 @@ export function renderProfiles(root: HTMLElement, ctx: AppCtx): () => void {
       ctx.save.activeProfileId = profile.id;
       ctx.save.welcomed = true;
       ctx.persist();
-      ctx.go({ name: 'hub' });
+      ctx.go({ name: 'subjects' });
     });
     card.append(face, name, grade, picker, play);
     grid.append(card);

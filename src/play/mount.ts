@@ -1,5 +1,5 @@
-import { formulaCount } from '../data/levels/helpers.ts';
-import type { LevelDef } from '../data/levels/types.ts';
+import { formulaCount } from '../engine/formula-prompt.ts';
+import type { LevelDef } from '../engine/level-def.ts';
 import { mountAtom } from './atom-view.ts';
 import { mountChoice } from './choice-view.ts';
 import { mountHunt } from './hunt-view.ts';

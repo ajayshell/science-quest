@@ -1,4 +1,4 @@
-import type { SortItemDef, SortRoundDef } from '../data/levels/types.ts';
+import type { SortItemDef, SortRoundDef } from '../engine/level-def.ts';
 import { shuffle } from '../game/shuffle.ts';
 import { formatGain } from '../scoring.ts';
 import { DragBoard, binsHeight, layoutBins, type Chip, type Zone } from './board.ts';

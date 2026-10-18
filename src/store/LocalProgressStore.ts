@@ -19,7 +19,10 @@ export class LocalProgressStore implements ProgressStore {
     const raw = this.kv.getItem(this.key);
     if (!raw) return createDefaultSave();
     try {
-      return parseSave(raw);
+      const data = parseSave(raw);
+      const stored = JSON.parse(raw) as { version?: unknown };
+      if (stored.version !== data.version) this.save(data);
+      return data;
     } catch {
       return createDefaultSave();
     }
