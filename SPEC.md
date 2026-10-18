@@ -78,7 +78,11 @@ This track unlocks after Track A World 6, or a parent can unlock it. It follows 
 - **AP Exam Mode:** timed multiple-choice sets plus free-response-style multi-step problems, scored the way the AP rubrics are.
 
 ## 5. Subjects
-After a profile is chosen, a subject picker comes before that subject's hub. **Chemistry** is playable. **Physics**, **Math**, and **Biology** show as coming-soon tiles until their levels exist. The hub has a way back to the picker.
+The flow is **Home → Who's playing? → subject hub → levels**.
+
+Home is the subject picker. **Chemistry** is playable. **Physics**, **Math**, and **Biology** show as coming-soon tiles until their levels exist. Choosing a playable subject opens Who's playing: big tiles for each profile, with a clear grade label (7th grader, 9th grader, Parent), an avatar, and an editable name. Choosing a player opens that subject's hub.
+
+Every screen after Home has a persistent top bar, including on a phone: **Home** (back to the subject picker), the current player, **Switch player**, and **Back** when you are inside a level, the card album, the leaderboard, or the scoring page.
 
 Each subject is a module: its own worlds and levels folder, registered in one list (`src/subjects/`). The hub and the play engine only read that module. Adding a subject, or filling in Physics or Math later, does not require hub or engine changes.
 
@@ -115,7 +119,8 @@ Progress is stored per profile and per subject. A save from before the picker (o
 ## 8. Open questions
 - What units are the kids actually covering this semester? We could reorder the levels to match.
 - Art style: **Decided (Oct 18, 2026).** Sleek neon, in the spirit of SineRider. Dark background, glowing neon lines and accents, smooth glow feedback, and clean modern type. High contrast and clear labels so a 7th grader can read everything easily.
-- Subject picker: **Decided (Oct 18, 2026).** A picker sits between the profile screen and a subject's hub. Chemistry is playable. Physics, Math, and Biology are coming-soon tiles. Each subject is a registered module with its own worlds and levels. Progress is per subject, and older chemistry-only saves migrate without loss.
+- Subject picker: **Decided (Oct 18, 2026).** Home is the subject picker. Chemistry is playable. Physics, Math, and Biology are coming-soon tiles. Each subject is a registered module with its own worlds and levels. Progress is per subject, and older chemistry-only saves migrate without loss.
+- Navigation: **Decided (Oct 18, 2026).** Home → Who's playing? → subject hub → levels. Who's playing shows big tiles labeled 7th grader, 9th grader, and Parent, with avatar and name. After Home, a top bar always shows Home, the current player, Switch player, and Back when a screen sits under the hub.
 - Parent unlock: **Decided (Oct 18, 2026).** The parent profile can play every level, world, and boss. Kids keep the normal one-after-another unlock.
 - Should there be sound and music?
 - Should the parent profile be able to set difficulty? Unlocking tracks is already decided: the parent can play everything, and kids follow the normal path.
