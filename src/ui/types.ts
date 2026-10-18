@@ -14,6 +14,11 @@ export type AppCtx = {
   subjectId: string;
   persist: () => void;
   go: (route: Route) => void;
+  home: () => void;
+  openSubject: (subjectId: string) => void;
+  choosePlayer: () => void;
+  switchPlayer: () => void;
+  back: () => void;
   progress: () => ProfileProgress;
   profile: () => Profile;
   replaceSave: (data: SaveData) => void;

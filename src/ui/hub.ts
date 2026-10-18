@@ -2,7 +2,6 @@ import { isUnlocked, isWorldUnlocked, nextOpenLevel, totalStars } from '../game/
 import { getSubject, levelsInWorld } from '../subjects/registry.ts';
 import type { AppCtx } from './types.ts';
 import { el, starRow } from './dom.ts';
-import { avatarSvg } from './icons.ts';
 
 export function renderHub(root: HTMLElement, ctx: AppCtx): () => void {
   const subject = getSubject(ctx.subjectId);
@@ -10,21 +9,13 @@ export function renderHub(root: HTMLElement, ctx: AppCtx): () => void {
   const progress = ctx.progress();
   const screen = el('section', 'hub');
   const top = el('header', 'hub-top');
-  const who = el('button', 'who');
-  who.type = 'button';
-  who.innerHTML = avatarSvg(profile.avatar);
-  const meta = el('span', 'who-meta');
-  meta.append(el('strong', '', profile.name));
-  meta.append(el('span', '', profile.gradeLabel));
-  who.append(meta);
-  who.addEventListener('click', () => ctx.go({ name: 'profiles' }));
 
   const stats = el('div', 'hub-stats');
   const starTotal = subject.levels.length * 3;
   stats.append(el('span', 'stat', `${progress.points.toLocaleString()} pts`));
   stats.append(el('span', 'stat', `${totalStars(progress)} / ${starTotal} stars`));
   const nav = el('nav', 'hub-nav');
-  const links: [string, 'subjects' | 'cards' | 'ranks' | 'scoring'][] = [['Subjects', 'subjects']];
+  const links: [string, 'cards' | 'ranks' | 'scoring'][] = [];
   if (subject.album) links.push(['Cards', 'cards']);
   links.push(['Ranks', 'ranks'], ['Scoring', 'scoring']);
   for (const [label, route] of links) {
@@ -33,7 +24,7 @@ export function renderHub(root: HTMLElement, ctx: AppCtx): () => void {
     button.addEventListener('click', () => ctx.go({ name: route }));
     nav.append(button);
   }
-  top.append(who, stats, nav);
+  top.append(stats, nav);
   screen.append(top);
   screen.append(el('p', 'eyebrow', subject.title));
 
@@ -44,7 +35,7 @@ export function renderHub(root: HTMLElement, ctx: AppCtx): () => void {
     wait.append(el('p', 'lede', `${subject.blurb} This subject is coming soon.`));
     const back = el('button', 'primary', 'All subjects');
     back.type = 'button';
-    back.addEventListener('click', () => ctx.go({ name: 'subjects' }));
+    back.addEventListener('click', () => ctx.home());
     wait.append(back);
     screen.append(wait);
     root.append(screen);

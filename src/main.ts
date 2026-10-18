@@ -7,13 +7,16 @@ import '@fontsource/syne/latin-800.css';
 import './styles.css';
 import { LocalProgressStore } from './store/LocalProgressStore.ts';
 import { emptyProgress, type SaveData } from './store/types.ts';
+import { getSubject } from './subjects/registry.ts';
 import { renderAlbum } from './ui/album.ts';
 import { renderHelp } from './ui/help.ts';
 import { renderHub } from './ui/hub.ts';
+import { reduceNav, showsTopBar, type NavAction, type NavState } from './ui/nav.ts';
 import { renderPlay } from './ui/play-screen.ts';
 import { renderProfiles } from './ui/profiles.ts';
 import { renderRanks } from './ui/ranks.ts';
 import { renderSubjects } from './ui/subjects.ts';
+import { renderTopBar } from './ui/topbar.ts';
 import type { AppCtx, Route } from './ui/types.ts';
 
 const store = new LocalProgressStore();
@@ -22,33 +25,54 @@ const view = document.querySelector('#view');
 if (!view) throw new Error('Missing #view');
 
 let cleanup: (() => void) | null = null;
-let subjectId = 'chemistry';
+let nav: NavState = { route: { name: 'subjects' }, subjectId: 'chemistry' };
+
+function dispatch(action: NavAction): void {
+  nav = reduceNav(nav, action);
+  render(nav.route);
+}
 
 const ctx: AppCtx = {
   get save() {
     return box.save;
   },
   get subjectId() {
-    return subjectId;
+    return nav.subjectId;
   },
   set subjectId(id: string) {
-    subjectId = id;
+    nav = { ...nav, subjectId: id };
   },
   persist() {
     store.save(box.save);
   },
   go(route: Route) {
-    render(route);
+    dispatch({ type: 'go', route });
+  },
+  home() {
+    dispatch({ type: 'home' });
+  },
+  openSubject(subjectId: string) {
+    const playable = getSubject(subjectId).status === 'playable';
+    dispatch({ type: 'open-subject', subjectId, playable });
+  },
+  choosePlayer() {
+    dispatch({ type: 'choose-player' });
+  },
+  switchPlayer() {
+    dispatch({ type: 'switch-player' });
+  },
+  back() {
+    dispatch({ type: 'back' });
   },
   progress() {
     const profileId = box.save.profiles.some((profile) => profile.id === box.save.activeProfileId)
       ? box.save.activeProfileId
       : box.save.profiles[0]!.id;
     const bag = box.save.progress[profileId];
-    const slice = bag?.[subjectId];
+    const slice = bag?.[nav.subjectId];
     if (slice) return slice;
     const created = emptyProgress();
-    if (bag) bag[subjectId] = created;
+    if (bag) bag[nav.subjectId] = created;
     return created;
   },
   profile() {
@@ -76,6 +100,7 @@ function render(route: Route): void {
   const screen = document.createElement('div');
   screen.className = 'screen';
   view!.append(screen);
+  if (showsTopBar(route)) screen.append(renderTopBar(ctx, route));
   if (route.name === 'profiles') cleanup = renderProfiles(screen, ctx);
   else if (route.name === 'subjects') cleanup = renderSubjects(screen, ctx);
   else if (route.name === 'hub') cleanup = renderHub(screen, ctx);
@@ -92,4 +117,4 @@ shell?.insertAdjacentHTML(
   '<div class="aurora" aria-hidden="true"></div><div class="grid-fade" aria-hidden="true"></div>',
 );
 
-render(box.save.welcomed ? { name: 'subjects' } : { name: 'profiles' });
+render(nav.route);

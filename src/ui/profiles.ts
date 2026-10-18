@@ -1,15 +1,23 @@
+import { getSubject } from '../subjects/registry.ts';
 import { AVATARS } from '../store/types.ts';
 import type { AppCtx } from './types.ts';
 import { download, el, toast } from './dom.ts';
-import { avatarSvg, markSvg } from './icons.ts';
+import { avatarSvg } from './icons.ts';
+import { playerLabel } from './nav.ts';
 
 export function renderProfiles(root: HTMLElement, ctx: AppCtx): () => void {
+  const subject = getSubject(ctx.subjectId);
+  if (subject.status !== 'playable') {
+    ctx.home();
+    return () => undefined;
+  }
   const screen = el('section', 'profiles');
   const hero = el('div', 'hero');
-  hero.innerHTML = markSvg();
-  hero.append(el('p', 'eyebrow', 'Science Quest'));
+  hero.append(el('p', 'eyebrow', subject.title));
   hero.append(el('h1', 'display', "Who's playing?"));
-  hero.append(el('p', 'lede', 'Two students and one parent. Next you pick a subject. Points and cards stay with the player you pick.'));
+  hero.append(
+    el('p', 'lede', `Choose a player for ${subject.title}. The name and avatar can be changed. Points and cards stay with that player.`),
+  );
   screen.append(hero);
 
   const grid = el('div', 'profile-grid');
@@ -18,10 +26,14 @@ export function renderProfiles(root: HTMLElement, ctx: AppCtx): () => void {
     if (profile.id === ctx.save.activeProfileId) card.classList.add('is-active');
     const face = el('div', 'profile-face');
     face.innerHTML = avatarSvg(profile.avatar);
+    const role = el('p', 'profile-role', playerLabel(profile));
+    const nameLabel = el('label', 'fine', 'Name');
+    nameLabel.htmlFor = `name-${profile.id}`;
     const name = el('input', 'name-input') as HTMLInputElement;
+    name.id = `name-${profile.id}`;
     name.value = profile.name;
     name.maxLength = 20;
-    name.setAttribute('aria-label', `${profile.gradeLabel} name`);
+    name.setAttribute('aria-label', `${playerLabel(profile)} name`);
     name.addEventListener('change', () => {
       profile.name = name.value.trim().slice(0, 20) || 'Player';
       name.value = profile.name;
@@ -42,15 +54,15 @@ export function renderProfiles(root: HTMLElement, ctx: AppCtx): () => void {
       });
       picker.append(button);
     }
-    const play = el('button', 'primary', 'Play');
+    const play = el('button', 'primary', `Choose ${playerLabel(profile)}`);
     play.type = 'button';
     play.addEventListener('click', () => {
       ctx.save.activeProfileId = profile.id;
       ctx.save.welcomed = true;
       ctx.persist();
-      ctx.go({ name: 'subjects' });
+      ctx.choosePlayer();
     });
-    card.append(face, name, grade, picker, play);
+    card.append(face, role, nameLabel, name, grade, picker, play);
     grid.append(card);
   }
   screen.append(grid);

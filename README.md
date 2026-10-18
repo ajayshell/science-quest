@@ -22,9 +22,9 @@ npm run build
 
 ## How to play
 
-1. Pick a profile. There are two kids and one parent. Change the name and the neon avatar.
-2. Pick a subject. Chemistry is playable. Physics, Math, and Biology are marked coming soon.
-3. Clear levels in order. Each one takes a few minutes. The parent profile can open every level, world, and boss.
+1. On Home, pick a subject. Chemistry is playable. Physics, Math, and Biology are marked coming soon.
+2. On Who's playing?, choose a big tile: 7th grader, 9th grader, or Parent. Change the name and the neon avatar if you want.
+3. Clear levels in order. Each one takes a few minutes. The parent profile can open every level, world, and boss. Home and Switch player stay in the top bar. Back returns to the hub from a level.
 4. Right answers score 100 points plus a speed bonus of up to 50. A streak multiplies the total by 0.25 per correct answer in a row, up to ×3.
 5. Finish a level for 1–3 stars. Three stars means every answer was right on the first try, you used no hints, and you beat the star time.
 6. Hints cost 30 points. A wrong answer shows a short explanation instead of a penalty screen.
