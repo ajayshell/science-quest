@@ -105,6 +105,6 @@ This track unlocks after Track A World 6, or a parent can unlock it. It follows 
 
 ## 8. Open questions
 - What units are the kids actually covering this semester? We could reorder the levels to match.
-- Art style: bright cartoon, or sleek neon like SineRider?
+- Art style: **Decided (Oct 18, 2026).** Sleek neon, in the spirit of SineRider. Dark background, glowing neon lines and accents, smooth glow feedback, and clean modern type. High contrast and clear labels so a 7th grader can read everything easily.
 - Should there be sound and music?
 - Should the parent profile be able to set difficulty and unlock tracks?

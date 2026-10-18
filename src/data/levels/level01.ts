@@ -1,0 +1,149 @@
+import type { LevelDef } from './types.ts';
+
+const solid = '#ffc857';
+const liquid = '#5ef2ff';
+const gas = '#ff4ecd';
+const pure = '#c6ff4d';
+const mixture = '#a996ff';
+
+export const level01: LevelDef = {
+  id: 'w1-matter-sort',
+  number: 1,
+  world: 1,
+  title: 'Matter Sort',
+  summary: 'Sort matter by state, then decide which samples are pure substances and which are mixtures.',
+  how: 'Drag each card into the bin that fits. A wrong drop snaps back and tells you why.',
+  parSeconds: 90,
+  speedMs: 9000,
+  cardIds: ['He', 'O'],
+  kind: 'sort',
+  rounds: [
+    {
+      instruction: 'Is it a solid, a liquid, or a gas?',
+      zones: [
+        { id: 'solid', label: 'Solid', sub: 'Keeps its shape', color: solid },
+        { id: 'liquid', label: 'Liquid', sub: 'Flows, fills the bottom', color: liquid },
+        { id: 'gas', label: 'Gas', sub: 'Fills the container', color: gas },
+      ],
+      items: [
+        {
+          id: 'ice',
+          label: 'Ice cube',
+          sub: 'Frozen water',
+          zoneId: 'solid',
+          hint: 'Ice keeps a shape until it melts. That is a solid.',
+          wrong: 'Ice keeps its own shape. It is a solid, even though it is made of water.',
+          success: 'Ice is solid water. Heat it and the same substance becomes liquid, then gas.',
+        },
+        {
+          id: 'wood',
+          label: 'Wood block',
+          sub: 'A cut of oak',
+          zoneId: 'solid',
+          hint: 'A wood block does not flow or spread out. Solid.',
+          wrong: 'Wood holds its shape. It belongs with the solids.',
+          success: 'Wood is a solid. It is also a mixture of many compounds, which is the next round.',
+        },
+        {
+          id: 'milk',
+          label: 'Milk',
+          sub: 'In a glass',
+          zoneId: 'liquid',
+          hint: 'Milk pours and takes the shape of the glass. Liquid.',
+          wrong: 'Milk pours. It is a liquid.',
+          success: 'Milk is a liquid. It is also a mixture, not a single pure substance.',
+        },
+        {
+          id: 'rain',
+          label: 'Raindrop',
+          sub: 'Falling water',
+          zoneId: 'liquid',
+          hint: 'A raindrop is liquid water.',
+          wrong: 'Rain is liquid water on its way to the ground.',
+          success: 'A raindrop is liquid water.',
+        },
+        {
+          id: 'steam',
+          label: 'Steam',
+          sub: 'Above a kettle',
+          zoneId: 'gas',
+          hint: 'Steam is water that has become a gas.',
+          wrong: 'Steam does not have its own shape. It is water as a gas.',
+          success: 'Steam is gaseous water. Same substance as ice, different state.',
+        },
+        {
+          id: 'helium',
+          label: 'Helium',
+          sub: 'In a balloon',
+          zoneId: 'gas',
+          hint: 'The helium inside a balloon is a gas. That is why the balloon puffs out.',
+          wrong: 'Helium spreads to fill the balloon. It is a gas.',
+          success: 'Helium is a noble-gas element. A balloon full of it floats.',
+        },
+      ],
+    },
+    {
+      instruction: 'Pure substance, or a mixture of more than one?',
+      zones: [
+        { id: 'pure', label: 'Pure substance', sub: 'Element or compound', color: pure },
+        { id: 'mix', label: 'Mixture', sub: 'Two or more things', color: mixture },
+      ],
+      items: [
+        {
+          id: 'distilled',
+          label: 'Distilled water',
+          sub: 'Only H₂O',
+          zoneId: 'pure',
+          hint: 'Distilled water is just H₂O, a compound. That is a pure substance.',
+          wrong: 'Distilled water is only one compound, H₂O. Pure substance.',
+          success: 'H₂O is a compound, and a single compound is a pure substance.',
+        },
+        {
+          id: 'gold',
+          label: 'Gold bar',
+          sub: 'The element Au',
+          zoneId: 'pure',
+          hint: 'A gold bar of the element Au is a pure substance.',
+          wrong: 'Gold is a single element. Elements are pure substances.',
+          success: 'Gold is an element, so a pure gold bar is a pure substance.',
+        },
+        {
+          id: 'oxygen',
+          label: 'Oxygen gas',
+          sub: 'Only O₂',
+          zoneId: 'pure',
+          hint: 'A tank of only O₂ is one substance, even though each molecule has two atoms.',
+          wrong: 'O₂ is one substance: the element oxygen. It is not a mixture.',
+          success: 'O₂ is the element oxygen written as a molecule. Still a pure substance.',
+        },
+        {
+          id: 'saltwater',
+          label: 'Salt water',
+          sub: 'Salt dissolved',
+          zoneId: 'mix',
+          hint: 'Salt water is salt and water together. You can separate them. Mixture.',
+          wrong: 'Salt water contains salt and water. That is a mixture, called a solution.',
+          success: 'Salt water is a mixture. Evaporate it and the salt stays behind.',
+        },
+        {
+          id: 'trail',
+          label: 'Trail mix',
+          sub: 'Nuts and fruit',
+          zoneId: 'mix',
+          hint: 'You can see the different pieces. Trail mix is a mixture.',
+          wrong: 'Trail mix is several foods in one bag. Mixture.',
+          success: 'Trail mix is a mixture. The parts keep their own properties.',
+        },
+        {
+          id: 'air',
+          label: 'Air',
+          sub: 'In the room',
+          zoneId: 'mix',
+          hint: 'Air is mostly nitrogen and oxygen, plus other gases. Mixture.',
+          wrong: 'Air is several gases together. It is a mixture, not one element.',
+          success: 'Air is a mixture of gases, mostly N₂ and O₂.',
+        },
+      ],
+    },
+  ],
+};
