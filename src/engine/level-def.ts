@@ -78,7 +78,7 @@ export type FormulaPromptDef = {
 type LevelBase = {
   id: string;
   number: number;
-  world: 1 | 2 | 3;
+  world: number;
   title: string;
   summary: string;
   how: string;

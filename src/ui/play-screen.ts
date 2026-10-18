@@ -1,7 +1,7 @@
 import { getCard } from '../data/cards.ts';
-import { WORLDS, getLevel } from '../data/levels/index.ts';
 import { LevelSession } from '../game/session.ts';
 import { isUnlocked } from '../game/unlock.ts';
+import { getSubject } from '../subjects/registry.ts';
 import { mountLevel } from '../play/mount.ts';
 import type { PlayHooks } from '../play/types.ts';
 import { HINT_COST, comboMultiplier, formatClock, formatMult, rateStars } from '../scoring.ts';
@@ -22,11 +22,17 @@ type Snapshot = {
 };
 
 export function renderPlay(root: HTMLElement, levelNumber: number, ctx: AppCtx): () => void {
-  const level = getLevel(levelNumber);
-  if (!isUnlocked(ctx.progress(), level.number)) {
-    ctx.go({ name: 'hub' });
+  const subject = getSubject(ctx.subjectId);
+  const found = subject.levels.find((item) => item.number === levelNumber);
+  if (
+    !found ||
+    subject.status !== 'playable' ||
+    !isUnlocked(ctx.progress(), found.number, subject.levels, ctx.profile().role)
+  ) {
+    ctx.go(subject.status === 'playable' ? { name: 'hub' } : { name: 'subjects' });
     return () => undefined;
   }
+  const level = found;
   const session = new LevelSession();
   let mode: 'intro' | 'play' | 'results' = 'intro';
   let innerStop: (() => void) | null = null;
@@ -46,7 +52,7 @@ export function renderPlay(root: HTMLElement, levelNumber: number, ctx: AppCtx):
   }
 
   function paintIntro(): void {
-    const world = WORLDS.find((item) => item.id === level.world);
+    const world = subject.worlds.find((item) => item.id === level.world);
     const card = el('article', 'intro');
     card.append(el('p', 'eyebrow', `${world?.kicker ?? 'World'} · Level ${String(level.number).padStart(2, '0')}`));
     card.append(el('h1', 'display', level.title));
@@ -239,10 +245,11 @@ export function renderPlay(root: HTMLElement, levelNumber: number, ctx: AppCtx):
       card.append(el('p', '', 'No new cards this time. These are already in the album.'));
     }
     const actions = el('div', 'tool-row');
-    if (level.number < 11) {
+    const nextLevel = subject.levels.find((item) => item.number === level.number + 1);
+    if (nextLevel) {
       const next = el('button', 'primary', 'Next level');
       next.type = 'button';
-      next.addEventListener('click', () => ctx.go({ name: 'play', level: level.number + 1 }));
+      next.addEventListener('click', () => ctx.go({ name: 'play', level: nextLevel.number }));
       actions.append(next);
     }
     const again = el('button', 'ghost', 'Replay');

@@ -1,5 +1,13 @@
-import { AVATAR_IDS } from './defaults.ts';
-import { emptyProgress, type LevelRecord, type Profile, type ProfileProgress, type SaveData } from './types.ts';
+import { SUBJECTS } from '../subjects/registry.ts';
+import { AVATAR_IDS, emptySubjectProgress } from './defaults.ts';
+import {
+  emptyProgress,
+  type LevelRecord,
+  type Profile,
+  type ProfileProgress,
+  type ProgressBySubject,
+  type SaveData,
+} from './types.ts';
 
 function asRecord(value: unknown, label: string): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -39,9 +47,11 @@ function readLevel(value: unknown): LevelRecord {
 }
 
 function readProgress(value: unknown): ProfileProgress {
-  if (!value || typeof value !== 'object') return emptyProgress();
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return emptyProgress();
   const row = value as Record<string, unknown>;
-  const levelsIn = row.levels && typeof row.levels === 'object' ? (row.levels as Record<string, unknown>) : {};
+  const levelsIn = row.levels && typeof row.levels === 'object' && !Array.isArray(row.levels)
+    ? (row.levels as Record<string, unknown>)
+    : {};
   const levels: Record<string, LevelRecord> = {};
   for (const [id, level] of Object.entries(levelsIn)) levels[id] = readLevel(level);
   const cards = Array.isArray(row.cards) ? row.cards.filter((id): id is string => typeof id === 'string') : [];
@@ -53,6 +63,30 @@ function readProgress(value: unknown): ProfileProgress {
   };
 }
 
+/** A version-1 profile blob stores points directly. A version-2 blob stores subjects. */
+function isFlatProgress(value: unknown): boolean {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const row = value as Record<string, unknown>;
+  return 'points' in row || 'levels' in row || 'cards' in row || 'bestCombo' in row;
+}
+
+function readSubjectMap(value: unknown): ProgressBySubject {
+  const map = emptySubjectProgress();
+  if (isFlatProgress(value)) {
+    map.chemistry = readProgress(value);
+    return map;
+  }
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    for (const [subjectId, progress] of Object.entries(value as Record<string, unknown>)) {
+      map[subjectId] = readProgress(progress);
+    }
+  }
+  for (const subject of SUBJECTS) {
+    if (!map[subject.id]) map[subject.id] = emptyProgress();
+  }
+  return map;
+}
+
 export function parseSave(raw: string): SaveData {
   let value: unknown;
   try {
@@ -61,7 +95,7 @@ export function parseSave(raw: string): SaveData {
     throw new Error('That file is not valid JSON.');
   }
   const row = asRecord(value, 'Progress file');
-  if (row.version !== 1) throw new Error('This progress file is from a different version.');
+  if (row.version !== 1 && row.version !== 2) throw new Error('This progress file is from a different version.');
   if (!Array.isArray(row.profiles) || row.profiles.length === 0) {
     throw new Error('No profiles in that file.');
   }
@@ -72,13 +106,15 @@ export function parseSave(raw: string): SaveData {
     ids.add(profile.id);
   }
   const progressIn =
-    row.progress && typeof row.progress === 'object' ? (row.progress as Record<string, unknown>) : {};
-  const progress: Record<string, ProfileProgress> = {};
-  for (const profile of profiles) progress[profile.id] = readProgress(progressIn[profile.id]);
+    row.progress && typeof row.progress === 'object' && !Array.isArray(row.progress)
+      ? (row.progress as Record<string, unknown>)
+      : {};
+  const progress: Record<string, ProgressBySubject> = {};
+  for (const profile of profiles) progress[profile.id] = readSubjectMap(progressIn[profile.id]);
   let active = typeof row.activeProfileId === 'string' ? row.activeProfileId : profiles[0]!.id;
   if (!ids.has(active)) active = profiles[0]!.id;
   return {
-    version: 1,
+    version: 2,
     welcomed: row.welcomed === true,
     activeProfileId: active,
     profiles,

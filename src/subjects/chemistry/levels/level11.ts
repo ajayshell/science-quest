@@ -1,6 +1,6 @@
-import { bySymbol } from '../elements.ts';
+import { bySymbol } from '../../../data/elements.ts';
 import { choice, formulaCount } from './helpers.ts';
-import type { LevelDef } from './types.ts';
+import type { LevelDef } from '../../../engine/level-def.ts';
 
 const carbon = bySymbol.get('C');
 if (!carbon) throw new Error('Carbon missing from the periodic table');

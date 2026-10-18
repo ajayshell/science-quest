@@ -1,19 +1,21 @@
-import { LEVELS } from '../data/levels/index.ts';
 import { totalStars } from '../game/unlock.ts';
+import { getSubject } from '../subjects/registry.ts';
+import { emptyProgress } from '../store/types.ts';
 import type { AppCtx } from './types.ts';
 import { el } from './dom.ts';
 import { avatarSvg } from './icons.ts';
 import { back } from './album.ts';
 
 export function renderRanks(root: HTMLElement, ctx: AppCtx): () => void {
+  const subject = getSubject(ctx.subjectId);
   const screen = el('section', 'ranks');
   screen.append(back(ctx));
-  screen.append(el('p', 'eyebrow', 'Family'));
+  screen.append(el('p', 'eyebrow', subject.title));
   screen.append(el('h1', 'display', 'Leaderboard'));
-  screen.append(el('p', 'lede', 'Points on this device. A new personal best adds the difference. Hints spend points even on a replay.'));
+  screen.append(el('p', 'lede', 'Points on this device for this subject. A new personal best adds the difference. Hints spend points even on a replay.'));
   const list = el('ol', 'rank-list');
   const rows = ctx.save.profiles
-    .map((profile) => ({ profile, progress: ctx.save.progress[profile.id]! }))
+    .map((profile) => ({ profile, progress: ctx.save.progress[profile.id]?.[subject.id] ?? emptyProgress() }))
     .sort(
       (a, b) =>
         b.progress.points - a.progress.points ||
@@ -32,7 +34,7 @@ export function renderRanks(root: HTMLElement, ctx: AppCtx): () => void {
       el(
         'span',
         '',
-        `${totalStars(row.progress)} / ${LEVELS.length * 3} stars · ${row.progress.cards.length} cards · best streak ${row.progress.bestCombo}`,
+        `${totalStars(row.progress)} / ${subject.levels.length * 3} stars · ${row.progress.cards.length} cards · best streak ${row.progress.bestCombo}`,
       ),
     );
     const points = el('span', 'rank-points', row.progress.points.toLocaleString());

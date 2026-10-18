@@ -1,21 +1,22 @@
-import { CARDS, type CardDef } from '../data/cards.ts';
+import type { CardDef } from '../data/cards.ts';
 import { formulaHtml } from '../formula.ts';
+import { getSubject } from '../subjects/registry.ts';
 import type { AppCtx } from './types.ts';
 import { el } from './dom.ts';
 
 export function renderAlbum(root: HTMLElement, ctx: AppCtx): () => void {
+  const album = getSubject(ctx.subjectId).album;
+  if (!album) {
+    ctx.go({ name: 'hub' });
+    return () => undefined;
+  }
+  const cards = album.cards;
   const owned = new Set(ctx.progress().cards);
   const screen = el('section', 'album');
   screen.append(back(ctx));
   screen.append(el('p', 'eyebrow', 'Collection'));
-  screen.append(el('h1', 'display', 'Element & molecule cards'));
-  screen.append(
-    el(
-      'p',
-      'lede',
-      `${owned.size} of ${CARDS.length} lit. Clear a level to unlock the cards it teaches.`,
-    ),
-  );
+  screen.append(el('h1', 'display', album.title));
+  screen.append(el('p', 'lede', `${owned.size} of ${cards.length} lit. ${album.lede}`));
 
   const filters = el('div', 'filters');
   let mode: 'all' | 'element' | 'molecule' = 'all';
@@ -41,7 +42,7 @@ export function renderAlbum(root: HTMLElement, ctx: AppCtx): () => void {
 
   function paint(): void {
     grid.replaceChildren();
-    for (const card of CARDS) {
+    for (const card of cards) {
       if (mode !== 'all' && card.kind !== mode) continue;
       const unlocked = owned.has(card.id);
       const tile = el('button', unlocked ? 'collect' : 'collect is-locked');

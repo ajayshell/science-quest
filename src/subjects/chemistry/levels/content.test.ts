@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { getCard } from '../cards.ts';
-import { bySymbol } from '../elements.ts';
-import { atomCount } from '../../formula.ts';
+import { getCard } from '../../../data/cards.ts';
+import { bySymbol } from '../../../data/elements.ts';
+import { atomCount } from '../../../formula.ts';
 import { LEVELS } from './index.ts';
-import { SCENES } from '../../play/scenes.ts';
-import { MAIN_GROUP_SYMBOLS } from '../../play/table-map.ts';
+import { SCENES } from '../../../play/scenes.ts';
+import { MAIN_GROUP_SYMBOLS } from '../../../play/table-map.ts';
 
 describe('M1 level content', () => {
   it('ships levels 1 through 11 in order across three worlds', () => {

@@ -1,4 +1,4 @@
-import type { ChoiceDef } from '../data/levels/types.ts';
+import type { ChoiceDef } from '../engine/level-def.ts';
 import { formulaHtml } from '../formula.ts';
 import { shuffle } from '../game/shuffle.ts';
 import { formatGain } from '../scoring.ts';

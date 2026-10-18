@@ -1,5 +1,5 @@
 import { choice } from './helpers.ts';
-import type { LevelDef } from './types.ts';
+import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level03: LevelDef = {
   id: 'w1-element-compound',

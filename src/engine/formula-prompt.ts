@@ -1,9 +1,5 @@
-import { atomCount } from '../../formula.ts';
-import type { ChoiceDef } from './types.ts';
-
-export function choice(partial: ChoiceDef): ChoiceDef {
-  return partial;
-}
+import { atomCount } from '../formula.ts';
+import type { ChoiceDef } from './level-def.ts';
 
 export function formulaCount(input: {
   id: string;

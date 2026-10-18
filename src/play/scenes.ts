@@ -1,4 +1,4 @@
-import type { HuntSceneId } from '../data/levels/types.ts';
+import type { HuntSceneId } from '../engine/level-def.ts';
 import { FONT, roundRect } from './draw.ts';
 
 export type SceneObject = {

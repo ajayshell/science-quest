@@ -1,4 +1,4 @@
-import type { HuntPromptDef } from '../data/levels/types.ts';
+import type { HuntPromptDef } from '../engine/level-def.ts';
 import { formatGain } from '../scoring.ts';
 import { fitCanvas } from './draw.ts';
 import { SCENES, drawScene } from './scenes.ts';

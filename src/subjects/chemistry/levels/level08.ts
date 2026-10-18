@@ -1,4 +1,4 @@
-import type { LevelDef } from './types.ts';
+import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level08: LevelDef = {
   id: 'w3-molecule-builder',

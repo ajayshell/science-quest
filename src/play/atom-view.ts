@@ -1,5 +1,5 @@
 import { bySymbol, byZ, type ElementRecord } from '../data/elements.ts';
-import type { AtomChallengeDef } from '../data/levels/types.ts';
+import type { AtomChallengeDef } from '../engine/level-def.ts';
 import { formatGain } from '../scoring.ts';
 import { FONT, fitCanvas, hit, roundRect, type Rect } from './draw.ts';
 import { later, type PlayHooks } from './types.ts';

@@ -22,12 +22,15 @@ export type ProfileProgress = {
   cards: string[];
 };
 
+/** profile id -> subject id -> that subject's points, stars, and cards */
+export type ProgressBySubject = Record<string, ProfileProgress>;
+
 export type SaveData = {
-  version: 1;
+  version: 2;
   welcomed: boolean;
   activeProfileId: string;
   profiles: Profile[];
-  progress: Record<string, ProfileProgress>;
+  progress: Record<string, ProgressBySubject>;
 };
 
 export const AVATARS = ['atom', 'flask', 'comet', 'bolt', 'crystal', 'wave', 'rocket', 'sun'] as const;

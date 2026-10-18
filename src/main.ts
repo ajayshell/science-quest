@@ -6,13 +6,14 @@ import '@fontsource/syne/latin-700.css';
 import '@fontsource/syne/latin-800.css';
 import './styles.css';
 import { LocalProgressStore } from './store/LocalProgressStore.ts';
-import type { SaveData } from './store/types.ts';
+import { emptyProgress, type SaveData } from './store/types.ts';
 import { renderAlbum } from './ui/album.ts';
 import { renderHelp } from './ui/help.ts';
 import { renderHub } from './ui/hub.ts';
 import { renderPlay } from './ui/play-screen.ts';
 import { renderProfiles } from './ui/profiles.ts';
 import { renderRanks } from './ui/ranks.ts';
+import { renderSubjects } from './ui/subjects.ts';
 import type { AppCtx, Route } from './ui/types.ts';
 
 const store = new LocalProgressStore();
@@ -21,10 +22,17 @@ const view = document.querySelector('#view');
 if (!view) throw new Error('Missing #view');
 
 let cleanup: (() => void) | null = null;
+let subjectId = 'chemistry';
 
 const ctx: AppCtx = {
   get save() {
     return box.save;
+  },
+  get subjectId() {
+    return subjectId;
+  },
+  set subjectId(id: string) {
+    subjectId = id;
   },
   persist() {
     store.save(box.save);
@@ -33,7 +41,15 @@ const ctx: AppCtx = {
     render(route);
   },
   progress() {
-    return box.save.progress[box.save.activeProfileId] ?? box.save.progress[box.save.profiles[0]!.id]!;
+    const profileId = box.save.profiles.some((profile) => profile.id === box.save.activeProfileId)
+      ? box.save.activeProfileId
+      : box.save.profiles[0]!.id;
+    const bag = box.save.progress[profileId];
+    const slice = bag?.[subjectId];
+    if (slice) return slice;
+    const created = emptyProgress();
+    if (bag) bag[subjectId] = created;
+    return created;
   },
   profile() {
     return (
@@ -61,6 +77,7 @@ function render(route: Route): void {
   screen.className = 'screen';
   view!.append(screen);
   if (route.name === 'profiles') cleanup = renderProfiles(screen, ctx);
+  else if (route.name === 'subjects') cleanup = renderSubjects(screen, ctx);
   else if (route.name === 'hub') cleanup = renderHub(screen, ctx);
   else if (route.name === 'play') cleanup = renderPlay(screen, route.level, ctx);
   else if (route.name === 'cards') cleanup = renderAlbum(screen, ctx);
@@ -75,4 +92,4 @@ shell?.insertAdjacentHTML(
   '<div class="aurora" aria-hidden="true"></div><div class="grid-fade" aria-hidden="true"></div>',
 );
 
-render(box.save.welcomed ? { name: 'hub' } : { name: 'profiles' });
+render(box.save.welcomed ? { name: 'subjects' } : { name: 'profiles' });

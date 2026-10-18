@@ -1,6 +1,11 @@
-import { AVATARS, emptyProgress, type Profile, type SaveData } from './types.ts';
+import { SUBJECTS } from '../subjects/registry.ts';
+import { AVATARS, emptyProgress, type Profile, type ProgressBySubject, type SaveData } from './types.ts';
 
 export const AVATAR_IDS: readonly string[] = AVATARS;
+
+export function emptySubjectProgress(): ProgressBySubject {
+  return Object.fromEntries(SUBJECTS.map((subject) => [subject.id, emptyProgress()]));
+}
 
 export function createDefaultSave(): SaveData {
   const profiles: Profile[] = [
@@ -27,10 +32,10 @@ export function createDefaultSave(): SaveData {
     },
   ];
   return {
-    version: 1,
+    version: 2,
     welcomed: false,
     activeProfileId: profiles[0]!.id,
     profiles,
-    progress: Object.fromEntries(profiles.map((profile) => [profile.id, emptyProgress()])),
+    progress: Object.fromEntries(profiles.map((profile) => [profile.id, emptySubjectProgress()])),
   };
 }

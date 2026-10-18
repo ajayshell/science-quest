@@ -1,4 +1,4 @@
-import type { LevelDef } from './types.ts';
+import type { LevelDef } from '../../../engine/level-def.ts';
 
 const solid = '#ffc857';
 const liquid = '#5ef2ff';
