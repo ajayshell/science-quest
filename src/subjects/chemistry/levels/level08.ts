@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
 export const level08: LevelDef = {
@@ -28,6 +29,7 @@ export const level08: LevelDef = {
       bank: ['H', 'H', 'O', 'C'],
       hint: 'Water is H₂O: one oxygen in the middle, a hydrogen on each bond.',
       success: 'Water is bent, not straight. Two hydrogens bond to one oxygen.',
+      source: SRC.molecules,
     },
     {
       id: 'oxygen',
@@ -41,7 +43,9 @@ export const level08: LevelDef = {
       doubleBonds: [['o1', 'o2']],
       bank: ['O', 'O', 'H', 'N'],
       hint: 'Oxygen gas is two oxygen atoms sharing a double bond. No hydrogen.',
-      success: 'O₂ is a molecular element. The double line is a double bond.',
+      success: 'O₂ is a molecular element. The double line is the grade-level picture of a double bond.',
+      note: 'Lewis structures draw O2 with a double bond. Molecular orbital theory, beyond this course, also explains why oxygen gas is paramagnetic.',
+      source: SRC.molecules,
     },
     {
       id: 'co2',
@@ -60,6 +64,7 @@ export const level08: LevelDef = {
       bank: ['C', 'O', 'O', 'H'],
       hint: 'Carbon dioxide is linear: O=C=O. Carbon sits between two oxygens.',
       success: 'CO₂ is a straight molecule. Each oxygen shares a double bond with carbon.',
+      source: SRC.molecules,
     },
     {
       id: 'methane',
@@ -80,7 +85,9 @@ export const level08: LevelDef = {
       ],
       bank: ['C', 'H', 'H', 'H', 'H', 'O'],
       hint: 'Methane is CH₄. Carbon is in the center, with four hydrogens around it.',
-      success: 'Methane is the main gas in natural gas. Carbon makes four bonds here.',
+      success: 'Methane is the main gas in natural gas. Carbon makes four bonds. On screen they look flat; in 3D they point toward the corners of a tetrahedron.',
+      note: 'The builder draws methane flat so every bond is visible. The molecular shape is tetrahedral.',
+      source: SRC.molecules,
     },
     {
       id: 'ammonia',
@@ -99,7 +106,9 @@ export const level08: LevelDef = {
       ],
       bank: ['N', 'H', 'H', 'H', 'O'],
       hint: 'Ammonia is NH₃. Nitrogen is in the center, bonded to three hydrogens.',
-      success: 'Ammonia is NH₃. Some household cleaners and plant fertilizers use it.',
+      success: 'Ammonia is NH₃. The real molecule is a pyramid, not flat. Some cleaners and fertilizers use it.',
+      note: 'Ammonia is trigonal pyramidal. Plants usually take up ammonium or nitrate, which come from ammonia fertilizer.',
+      source: SRC.molecules,
     },
     {
       id: 'salt',
@@ -114,6 +123,7 @@ export const level08: LevelDef = {
       bank: ['Na', 'Cl', 'H', 'O'],
       hint: 'Table salt is NaCl. Sodium on the left, chlorine on the right. They do not share electrons.',
       success: 'NaCl is an ionic compound. Sodium gives an electron to chlorine, making Na⁺ and Cl⁻.',
+      source: SRC.molecules,
     },
   ],
 };

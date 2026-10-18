@@ -36,7 +36,16 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
   host.append(wrap);
 
   let ctx = fitCanvas(canvas, 300, 420);
-  let drag: { kind: Kind; x: number; y: number; pointer: number; moved: boolean } | null = null;
+  let drag: {
+    kind: Kind;
+    x: number;
+    y: number;
+    originX: number;
+    originY: number;
+    pointer: number;
+    moved: boolean;
+    touch: boolean;
+  } | null = null;
   let tokenRects: Record<Kind, Rect> = {
     p: { x: 0, y: 0, w: 0, h: 0 },
     n: { x: 0, y: 0, w: 0, h: 0 },
@@ -77,7 +86,8 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
 
   function layout(): void {
     const width = Math.max(280, wrap.clientWidth || host.clientWidth || 320);
-    const height = Math.max(430, Math.min(560, Math.round(width * 0.95)));
+    // Keep the particle tray and the Check button on screen with the top bar.
+    const height = width < 700 ? 330 : 400;
     ctx = fitCanvas(canvas, width, height);
     const trayH = 96;
     nucleus = { x: width / 2, y: (height - trayH) * 0.48, r: Math.max(46, Math.min(width, height) * 0.11) };
@@ -264,7 +274,17 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
     for (const kind of ['p', 'n', 'e'] as const) {
       if (!hit(tokenRects[kind], point.x, point.y)) continue;
       canvas.setPointerCapture(event.pointerId);
-      drag = { kind, x: point.x, y: point.y - (event.pointerType === 'touch' ? 28 : 0), pointer: event.pointerId, moved: false };
+      const touch = event.pointerType === 'touch';
+      drag = {
+        kind,
+        x: point.x,
+        y: point.y,
+        originX: point.x,
+        originY: point.y,
+        pointer: event.pointerId,
+        moved: false,
+        touch,
+      };
       event.preventDefault();
       return;
     }
@@ -273,9 +293,13 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
   function onMove(event: PointerEvent): void {
     if (!drag || event.pointerId !== drag.pointer) return;
     const point = local(event);
-    if (Math.hypot(point.x - drag.x, point.y - drag.y) > 8) drag.moved = true;
+    if (Math.hypot(point.x - drag.originX, point.y - drag.originY) > 10) {
+      drag.moved = true;
+      event.preventDefault();
+    }
+    const lift = drag.touch && drag.moved ? 28 : 0;
     drag.x = point.x;
-    drag.y = point.y - 28 * (event.pointerType === 'touch' ? 1 : 0);
+    drag.y = point.y - lift;
     draw();
   }
 
@@ -283,8 +307,7 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
     if (!drag || event.pointerId !== drag.pointer) return;
     const current = drag;
     drag = null;
-    const point = local(event);
-    const dist = Math.hypot(point.x - nucleus.x, point.y - nucleus.y);
+    const dist = Math.hypot(current.x - nucleus.x, current.y - nucleus.y);
     if (!current.moved) add(current.kind, 'tap');
     else if (dist <= nucleus.r + 28) add(current.kind, 'nucleus');
     else if (dist <= shellOuter + 24) add(current.kind, 'shell');
@@ -303,7 +326,8 @@ export function mountAtom(host: HTMLElement, challenges: AtomChallengeDef[], hoo
       if (!hooks.session.wasAttempted(scope)) hooks.session.answer(scope, false, hooks.speedMs);
       const notes: string[] = [];
       if (counts.p !== row.z) {
-        notes.push(`${row.name} has atomic number ${row.z}, so it needs ${row.z} protons. You have ${counts.p}.`);
+        const protonWord = row.z === 1 ? 'proton' : 'protons';
+        notes.push(`${row.name} has atomic number ${row.z}, so it needs ${row.z} ${protonWord}. You have ${counts.p}.`);
       }
       if (counts.n !== neutrons) {
         notes.push(

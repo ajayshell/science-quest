@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import { bySymbol } from '../../../data/elements.ts';
 import { choice, formulaCount } from './helpers.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
@@ -12,7 +13,7 @@ export const level11: LevelDef = {
   boss: true,
   title: 'Formula Rush',
   summary: 'A timed mix of symbols, formulas, and everyday compounds. Ten questions, one shot each.',
-  how: 'You get one tap per question. The clock does not stop for explanations. No hints required — but they still cost points.',
+  how: 'You get one tap per question. The clock does not stop for explanations. A hint still costs points.',
   parSeconds: 70,
   speedMs: 4500,
   cardIds: ['co2'],
@@ -32,6 +33,7 @@ export const level11: LevelDef = {
       hint: 'Gold is Au, from aurum.',
       wrong: 'Gold is Au. Ag is silver.',
       success: 'Au is gold.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'o2',
@@ -46,6 +48,7 @@ export const level11: LevelDef = {
       hint: 'Both atoms are oxygen.',
       wrong: 'O₂ is still the element oxygen. A compound needs two different elements.',
       success: 'O₂ is a molecular element.',
+      source: SRC.formulas,
     }),
     formulaCount({
       id: 'caoh',
@@ -56,6 +59,7 @@ export const level11: LevelDef = {
       hint: 'The 2 outside multiplies the OH group.',
       wrong: 'OH twice means 2 oxygen atoms.',
       success: 'Ca(OH)₂ has 2 oxygens.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'soda',
@@ -70,6 +74,7 @@ export const level11: LevelDef = {
       hint: 'Baking soda is sodium bicarbonate.',
       wrong: 'Baking soda is NaHCO₃. NaCl is table salt.',
       success: 'NaHCO₃ is baking soda.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'sign',
@@ -84,6 +89,7 @@ export const level11: LevelDef = {
       hint: 'The gas is named on the sign: neon.',
       wrong: 'Neon is Ne. Na is sodium, a metal.',
       success: 'Ne is neon.',
+      source: SRC.formulas,
     }),
     formulaCount({
       id: 'glucose',
@@ -94,6 +100,7 @@ export const level11: LevelDef = {
       hint: 'The 12 is attached to H.',
       wrong: 'Glucose has 12 hydrogen atoms.',
       success: 'C₆H₁₂O₆ has 12 hydrogens.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'bones',
@@ -108,6 +115,7 @@ export const level11: LevelDef = {
       hint: 'Bones store calcium.',
       wrong: 'Bones store calcium, Ca. C is carbon.',
       success: 'Ca is calcium.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'water',
@@ -120,8 +128,10 @@ export const level11: LevelDef = {
       ],
       correctId: 'H2O',
       hint: 'Two hydrogens, one oxygen.',
-      wrong: 'Water is H₂O. H₂O₂ is hydrogen peroxide.',
+      wrong: 'Water is written H₂O. OH₂ lists the same atoms in the wrong order. H₂O₂ is hydrogen peroxide.',
+      note: 'OH2 is not an accepted formula for water. The conventional formula is H2O.',
       success: 'Water is H₂O.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'salt-halogen',
@@ -136,6 +146,7 @@ export const level11: LevelDef = {
       hint: 'The second symbol in NaCl is the halogen.',
       wrong: 'Chlorine, Cl, is the halogen. Sodium is the metal.',
       success: 'Cl is chlorine, a halogen.',
+      source: SRC.formulas,
     }),
     choice({
       id: 'protons',
@@ -152,6 +163,7 @@ export const level11: LevelDef = {
       hint: 'The proton count is the atomic number. Carbon is number 6.',
       wrong: 'Carbon’s atomic number is 6, so it has 6 protons. 12 is the mass number of carbon-12.',
       success: 'Carbon has 6 protons. Carbon-12 also has 6 neutrons.',
+      source: SRC.formulas,
     }),
   ],
 };

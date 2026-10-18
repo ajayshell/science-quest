@@ -1,3 +1,4 @@
+import { SRC } from '../../../data/sources.ts';
 import { choice } from './helpers.ts';
 import type { LevelDef } from '../../../engine/level-def.ts';
 
@@ -26,6 +27,7 @@ export const level10: LevelDef = {
       hint: 'Table salt is sodium chloride.',
       wrong: 'Table salt is NaCl, sodium chloride. The sweet crystals are sucrose.',
       success: 'NaCl is sodium chloride, table salt.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'rise',
@@ -40,6 +42,7 @@ export const level10: LevelDef = {
       hint: 'Baking soda is sodium bicarbonate.',
       wrong: 'Baking soda is NaHCO₃. The bubbles are carbon dioxide leaving the reaction.',
       success: 'NaHCO₃ is baking soda. Acids make it release CO₂.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'sour',
@@ -54,6 +57,7 @@ export const level10: LevelDef = {
       hint: 'Vinegar’s sour compound is acetic acid.',
       wrong: 'The sour compound in vinegar is acetic acid, CH₃COOH.',
       success: 'CH₃COOH is acetic acid. Kitchen vinegar is a mixture of this acid and water.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'rust',
@@ -67,7 +71,9 @@ export const level10: LevelDef = {
       correctId: 'rust',
       hint: 'Rust is an oxide of iron.',
       wrong: 'Rust is mostly iron oxide, Fe₂O₃. The nail was iron; oxygen joined it.',
-      success: 'Fe₂O₃ is iron oxide, the red-brown stuff we call rust.',
+      success: 'Fe₂O₃ is iron(III) oxide, the main iron compound in red-brown rust. Real rust also holds water.',
+      note: 'Rust is a mixture of hydrated iron(III) oxides, often written Fe2O3·nH2O, not pure anhydrous Fe2O3.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'sugar',
@@ -82,6 +88,7 @@ export const level10: LevelDef = {
       hint: 'Table sugar is sucrose. Glucose is the smaller sugar.',
       wrong: 'Table sugar is sucrose, C₁₂H₂₂O₁₁. Glucose is C₆H₁₂O₆.',
       success: 'Sucrose is table sugar. Glucose is a different, smaller sugar.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'shell',
@@ -96,6 +103,7 @@ export const level10: LevelDef = {
       hint: 'Shells are calcium carbonate.',
       wrong: 'Seashells and limestone are calcium carbonate, CaCO₃.',
       success: 'CaCO₃ is calcium carbonate. Corals and many shells build it.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'fizz',
@@ -110,10 +118,11 @@ export const level10: LevelDef = {
       hint: 'The fizz is carbon dioxide, the same gas you breathe out.',
       wrong: 'The bubbles are carbon dioxide, CO₂. O₂ is the oxygen you breathe in.',
       success: 'CO₂ is carbon dioxide. Plants take it in; soda traps it as bubbles.',
+      source: SRC.compounds,
     }),
     choice({
       id: 'sand',
-      prompt: 'Most beach sand and quartz are this compound.',
+      prompt: 'Quartz, and the sand on many beaches, is this compound.',
       choices: [
         { id: 'sand', label: 'SiO₂' },
         { id: 'salt', label: 'NaCl' },
@@ -121,9 +130,11 @@ export const level10: LevelDef = {
         { id: 'sugar', label: 'C₁₂H₂₂O₁₁' },
       ],
       correctId: 'sand',
-      hint: 'Sand is mostly silicon dioxide, also called silica.',
-      wrong: 'Beach sand is mostly silica, SiO₂. Glass is made by melting silica-rich sand.',
-      success: 'SiO₂ is silicon dioxide. Quartz is the same compound in crystal form.',
+      hint: 'Quartz is silicon dioxide, also called silica.',
+      wrong: 'Quartz is silica, SiO₂. Many beaches are quartz sand. Some tropical beaches are shell sand, which is calcium carbonate instead.',
+      success: 'SiO₂ is silicon dioxide. Quartz is that compound as a crystal. Glass is made by melting silica-rich sand with other ingredients.',
+      note: 'Not every beach is quartz. Carbonate beaches are mostly CaCO3. Soda-lime glass is silica melted with sodium carbonate and calcium carbonate.',
+      source: SRC.compounds,
     }),
   ],
 };

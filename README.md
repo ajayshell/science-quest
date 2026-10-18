@@ -58,7 +58,8 @@ Game screens never call `localStorage`. They talk to a `ProgressStore`. `LocalPr
 2. Reuse a `kind` that already exists: `sort`, `atom`, `choice`, `table`, `hunt`, `molecule`, `formula`, or `rush`.
 3. Register it in `src/subjects/chemistry/levels/index.ts`, in play order. The previous level must be cleared before this one unlocks for a student. The parent profile can already open it.
 4. If the level should unlock cards, add those ids to `cardIds` and define any new cards in `src/data/cards.ts`. Element facts live in `src/data/elements.json`.
-5. Run `npm test`. The content test checks that every choice, formula count, hunt target, and card id lines up.
+5. Give every graded item, table blank, and card a `source` string naming where the fact was checked. Add `note` when the student sentence leaves out a caveat a teacher should still see. Shared citations live in `src/data/sources.ts`.
+6. Run `npm test`. The content test checks sources, one correct answer, unique ids inside a level, formula counts, balanced equations, and the vendored element data.
 
 A new subject is a folder under `src/subjects/` with `worlds.ts`, `levels/`, and `index.ts`, plus one line in `src/subjects/registry.ts`. The hub does not need a change. Set `status` to `'playable'` when the first levels are ready. Until then the picker shows a coming-soon tile.
 
@@ -66,4 +67,6 @@ Formula questions should store an ASCII formula such as `Ca(OH)2`. The shared pa
 
 ## Data
 
-`src/data/elements.json` holds atomic number, symbol, name, group, period, standard atomic weight, a common isotope mass number, and a short fact. The identity fields are scientific facts compiled from IUPAC periodic-table data so the game can run offline. The facts themselves were written for this game.
+`src/data/elements.json` holds atomic number, symbol, name, group, period, standard atomic weight, the most abundant isotope’s mass number, a short fact, and a `source`. Identity fields follow IUPAC CIAAW standard atomic weights (2024) and NIST isotopic compositions, vendored so the game runs offline. Each fact was checked against OpenStax Chemistry 2e.
+
+Every question, sort card, atom challenge, hunt prompt, molecule, formula prompt, table blank, and album card must include `source`. `note` is optional and is for caveats that should not be dropped from the record. `npm test` fails if a source is missing, if a question has more than one correct choice, if an id repeats inside a level, if a formula’s slots do not match the atom count, or if a recorded equation does not balance.

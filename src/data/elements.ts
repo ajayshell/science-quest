@@ -21,6 +21,8 @@ export type ElementRecord = {
   state: 'solid' | 'liquid' | 'gas';
   massNumber: number;
   fact: string;
+  source: string;
+  note?: string;
 };
 
 const CATEGORIES = new Set<string>([
@@ -47,7 +49,10 @@ function isElement(value: unknown): value is ElementRecord {
     CATEGORIES.has(row.category) &&
     (row.state === 'solid' || row.state === 'liquid' || row.state === 'gas') &&
     typeof row.massNumber === 'number' &&
-    typeof row.fact === 'string'
+    typeof row.fact === 'string' &&
+    typeof row.source === 'string' &&
+    row.source.trim().length > 0 &&
+    (row.note === undefined || typeof row.note === 'string')
   );
 }
 

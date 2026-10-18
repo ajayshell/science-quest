@@ -77,6 +77,29 @@ export function atomCount(formula: string, element: string): number {
   return countAtoms(formula)[element] ?? 0;
 }
 
+/** True when both sides of `A + B -> C + D` contain the same atoms. */
+export function equationBalances(equation: string): boolean {
+  const sides = equation.split('->').map((side) => side.trim());
+  if (sides.length !== 2 || !sides[0] || !sides[1]) return false;
+  const tally = (side: string): Record<string, number> => {
+    const totals: Record<string, number> = {};
+    for (const term of side.split('+').map((part) => part.trim()).filter(Boolean)) {
+      const counted = countAtoms(term);
+      for (const [element, amount] of Object.entries(counted)) {
+        totals[element] = (totals[element] ?? 0) + amount;
+      }
+    }
+    return totals;
+  };
+  const left = tally(sides[0]);
+  const right = tally(sides[1]);
+  const keys = new Set([...Object.keys(left), ...Object.keys(right)]);
+  for (const key of keys) {
+    if ((left[key] ?? 0) !== (right[key] ?? 0)) return false;
+  }
+  return keys.size > 0;
+}
+
 /** ASCII formula → HTML with subscripts. A leading coefficient stays full size. */
 export function formulaHtml(formula: string): string {
   const s = formula.replace(/\s+/g, '');
